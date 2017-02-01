@@ -1,0 +1,475 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6D623E141E405FF300B759C9 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E011E405FF300B759C9 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E151E405FF300B759C9 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E041E405FF300B759C9 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E161E405FF300B759C9 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E061E405FF300B759C9 /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E171E405FF300B759C9 /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E081E405FF300B759C9 /* ASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E181E405FF300B759C9 /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E0C1E405FF300B759C9 /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E191E405FF300B759C9 /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E0E1E405FF300B759C9 /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E1A1E405FF300B759C9 /* HTTPNetDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E111E405FF300B759C9 /* HTTPNetDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E1B1E405FF300B759C9 /* HTTPNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E131E405FF300B759C9 /* HTTPNetworkManager.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E1F1E40610600B759C9 /* ReachabilityWifi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E1E1E40610600B759C9 /* ReachabilityWifi.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		6D623E221E40613100B759C9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D623E211E40613100B759C9 /* libz.tbd */; };
+		6D623E241E4063F700B759C9 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */; };
+		FF7ED9551E377D0000A017D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9541E377D0000A017D2 /* main.m */; };
+		FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9571E377D0000A017D2 /* AppDelegate.m */; };
+		FF7ED95E1E377D0000A017D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED95C1E377D0000A017D2 /* Main.storyboard */; };
+		FF7ED9601E377D0000A017D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED95F1E377D0000A017D2 /* Assets.xcassets */; };
+		FF7ED96C1E377D3900A017D2 /* MainVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED96B1E377D3900A017D2 /* MainVC.m */; };
+		FF7ED97B1E37A7D100A017D2 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED9711E37A7D100A017D2 /* bg.png */; };
+		FF7ED97C1E37A7D100A017D2 /* mic.png in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED9721E37A7D100A017D2 /* mic.png */; };
+		FF7ED97D1E37A7D100A017D2 /* SineWaveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9741E37A7D100A017D2 /* SineWaveViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FF7ED97E1E37A7D100A017D2 /* SineWaveViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED9751E37A7D100A017D2 /* SineWaveViewController.xib */; };
+		FF7ED97F1E37A7D100A017D2 /* SpeechToTextModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9771E37A7D100A017D2 /* SpeechToTextModule.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FF7ED9801E37A7D100A017D2 /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7ED9781E37A7D100A017D2 /* Speex.framework */; };
+		FF7ED9811E37A7D100A017D2 /* WaveDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FFC4CB381E40B639002078AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB371E40B639002078AF /* Images.xcassets */; };
+		FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB3A1E40B9F8002078AF /* bible_kr.db */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		6D623E001E405FF300B759C9 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
+		6D623E011E405FF300B759C9 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
+		6D623E021E405FF300B759C9 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
+		6D623E031E405FF300B759C9 /* ASIDownloadCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDownloadCache.h; sourceTree = "<group>"; };
+		6D623E041E405FF300B759C9 /* ASIDownloadCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDownloadCache.m; sourceTree = "<group>"; };
+		6D623E051E405FF300B759C9 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
+		6D623E061E405FF300B759C9 /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
+		6D623E071E405FF300B759C9 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
+		6D623E081E405FF300B759C9 /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIHTTPRequest.m; sourceTree = "<group>"; };
+		6D623E091E405FF300B759C9 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
+		6D623E0A1E405FF300B759C9 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		6D623E0B1E405FF300B759C9 /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIInputStream.h; sourceTree = "<group>"; };
+		6D623E0C1E405FF300B759C9 /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIInputStream.m; sourceTree = "<group>"; };
+		6D623E0D1E405FF300B759C9 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
+		6D623E0E1E405FF300B759C9 /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
+		6D623E0F1E405FF300B759C9 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		6D623E101E405FF300B759C9 /* HTTPNetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPNetDelegate.h; sourceTree = "<group>"; };
+		6D623E111E405FF300B759C9 /* HTTPNetDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPNetDelegate.m; sourceTree = "<group>"; };
+		6D623E121E405FF300B759C9 /* HTTPNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTTPNetworkManager.h; sourceTree = "<group>"; };
+		6D623E131E405FF300B759C9 /* HTTPNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTTPNetworkManager.m; sourceTree = "<group>"; };
+		6D623E1D1E40610600B759C9 /* ReachabilityWifi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ReachabilityWifi.h; sourceTree = "<group>"; };
+		6D623E1E1E40610600B759C9 /* ReachabilityWifi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityWifi.m; sourceTree = "<group>"; };
+		6D623E211E40613100B759C9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		FF7ED9501E377D0000A017D2 /* HymnBible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HymnBible.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FF7ED9541E377D0000A017D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		FF7ED9561E377D0000A017D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		FF7ED9571E377D0000A017D2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		FF7ED95D1E377D0000A017D2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FF7ED95F1E377D0000A017D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FF7ED9641E377D0000A017D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF7ED96A1E377D3900A017D2 /* MainVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainVC.h; sourceTree = "<group>"; };
+		FF7ED96B1E377D3900A017D2 /* MainVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainVC.m; sourceTree = "<group>"; };
+		FF7ED9711E37A7D100A017D2 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		FF7ED9721E37A7D100A017D2 /* mic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mic.png; sourceTree = "<group>"; };
+		FF7ED9731E37A7D100A017D2 /* SineWaveViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SineWaveViewController.h; sourceTree = "<group>"; };
+		FF7ED9741E37A7D100A017D2 /* SineWaveViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SineWaveViewController.m; sourceTree = "<group>"; };
+		FF7ED9751E37A7D100A017D2 /* SineWaveViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SineWaveViewController.xib; sourceTree = "<group>"; };
+		FF7ED9761E37A7D100A017D2 /* SpeechToTextModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SpeechToTextModule.h; sourceTree = "<group>"; };
+		FF7ED9771E37A7D100A017D2 /* SpeechToTextModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SpeechToTextModule.m; sourceTree = "<group>"; };
+		FF7ED9781E37A7D100A017D2 /* Speex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Speex.framework; sourceTree = "<group>"; };
+		FF7ED9791E37A7D100A017D2 /* WaveDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveDisplay.h; sourceTree = "<group>"; };
+		FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveDisplay.m; sourceTree = "<group>"; };
+		FFC4CB371E40B639002078AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		FFC4CB3A1E40B9F8002078AF /* bible_kr.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = bible_kr.db; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FF7ED94D1E377D0000A017D2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D623E241E4063F700B759C9 /* libsqlite3.0.tbd in Frameworks */,
+				6D623E221E40613100B759C9 /* libz.tbd in Frameworks */,
+				FF7ED9801E37A7D100A017D2 /* Speex.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6D623DFF1E405FF300B759C9 /* HTTP */ = {
+			isa = PBXGroup;
+			children = (
+				6D623E001E405FF300B759C9 /* ASIAuthenticationDialog.h */,
+				6D623E011E405FF300B759C9 /* ASIAuthenticationDialog.m */,
+				6D623E021E405FF300B759C9 /* ASICacheDelegate.h */,
+				6D623E031E405FF300B759C9 /* ASIDownloadCache.h */,
+				6D623E041E405FF300B759C9 /* ASIDownloadCache.m */,
+				6D623E051E405FF300B759C9 /* ASIFormDataRequest.h */,
+				6D623E061E405FF300B759C9 /* ASIFormDataRequest.m */,
+				6D623E071E405FF300B759C9 /* ASIHTTPRequest.h */,
+				6D623E081E405FF300B759C9 /* ASIHTTPRequest.m */,
+				6D623E091E405FF300B759C9 /* ASIHTTPRequestConfig.h */,
+				6D623E0A1E405FF300B759C9 /* ASIHTTPRequestDelegate.h */,
+				6D623E0B1E405FF300B759C9 /* ASIInputStream.h */,
+				6D623E0C1E405FF300B759C9 /* ASIInputStream.m */,
+				6D623E0D1E405FF300B759C9 /* ASINetworkQueue.h */,
+				6D623E0E1E405FF300B759C9 /* ASINetworkQueue.m */,
+				6D623E0F1E405FF300B759C9 /* ASIProgressDelegate.h */,
+				6D623E101E405FF300B759C9 /* HTTPNetDelegate.h */,
+				6D623E111E405FF300B759C9 /* HTTPNetDelegate.m */,
+				6D623E121E405FF300B759C9 /* HTTPNetworkManager.h */,
+				6D623E131E405FF300B759C9 /* HTTPNetworkManager.m */,
+			);
+			path = HTTP;
+			sourceTree = "<group>";
+		};
+		6D623E1C1E40610600B759C9 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				6D623E1D1E40610600B759C9 /* ReachabilityWifi.h */,
+				6D623E1E1E40610600B759C9 /* ReachabilityWifi.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		6D623E201E40613100B759C9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */,
+				6D623E211E40613100B759C9 /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FF7ED9471E377D0000A017D2 = {
+			isa = PBXGroup;
+			children = (
+				FF7ED9521E377D0000A017D2 /* HymnBible */,
+				FF7ED9511E377D0000A017D2 /* Products */,
+				6D623E201E40613100B759C9 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		FF7ED9511E377D0000A017D2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FF7ED9501E377D0000A017D2 /* HymnBible.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FF7ED9521E377D0000A017D2 /* HymnBible */ = {
+			isa = PBXGroup;
+			children = (
+				FF7ED96F1E37A7D100A017D2 /* Lib */,
+				FF7ED9561E377D0000A017D2 /* AppDelegate.h */,
+				FF7ED9571E377D0000A017D2 /* AppDelegate.m */,
+				FF7ED96A1E377D3900A017D2 /* MainVC.h */,
+				FF7ED96B1E377D3900A017D2 /* MainVC.m */,
+				FF7ED95C1E377D0000A017D2 /* Main.storyboard */,
+				FF7ED95F1E377D0000A017D2 /* Assets.xcassets */,
+				FF7ED9641E377D0000A017D2 /* Info.plist */,
+				FFC4CB371E40B639002078AF /* Images.xcassets */,
+				FF7ED9531E377D0000A017D2 /* Supporting Files */,
+			);
+			path = HymnBible;
+			sourceTree = "<group>";
+		};
+		FF7ED9531E377D0000A017D2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FF7ED9541E377D0000A017D2 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FF7ED96F1E37A7D100A017D2 /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				FFC4CB391E40B9F8002078AF /* DB */,
+				6D623E1C1E40610600B759C9 /* Reachability */,
+				6D623DFF1E405FF300B759C9 /* HTTP */,
+				FF7ED9701E37A7D100A017D2 /* SpeechToText */,
+			);
+			path = Lib;
+			sourceTree = "<group>";
+		};
+		FF7ED9701E37A7D100A017D2 /* SpeechToText */ = {
+			isa = PBXGroup;
+			children = (
+				FF7ED9711E37A7D100A017D2 /* bg.png */,
+				FF7ED9721E37A7D100A017D2 /* mic.png */,
+				FF7ED9731E37A7D100A017D2 /* SineWaveViewController.h */,
+				FF7ED9741E37A7D100A017D2 /* SineWaveViewController.m */,
+				FF7ED9751E37A7D100A017D2 /* SineWaveViewController.xib */,
+				FF7ED9761E37A7D100A017D2 /* SpeechToTextModule.h */,
+				FF7ED9771E37A7D100A017D2 /* SpeechToTextModule.m */,
+				FF7ED9781E37A7D100A017D2 /* Speex.framework */,
+				FF7ED9791E37A7D100A017D2 /* WaveDisplay.h */,
+				FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */,
+			);
+			path = SpeechToText;
+			sourceTree = "<group>";
+		};
+		FFC4CB391E40B9F8002078AF /* DB */ = {
+			isa = PBXGroup;
+			children = (
+				FFC4CB3A1E40B9F8002078AF /* bible_kr.db */,
+			);
+			path = DB;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FF7ED94F1E377D0000A017D2 /* HymnBible */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FF7ED9671E377D0000A017D2 /* Build configuration list for PBXNativeTarget "HymnBible" */;
+			buildPhases = (
+				FF7ED94C1E377D0000A017D2 /* Sources */,
+				FF7ED94D1E377D0000A017D2 /* Frameworks */,
+				FF7ED94E1E377D0000A017D2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HymnBible;
+			productName = HymnBible;
+			productReference = FF7ED9501E377D0000A017D2 /* HymnBible.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FF7ED9481E377D0000A017D2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Joseph_iMac;
+				TargetAttributes = {
+					FF7ED94F1E377D0000A017D2 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FF7ED94B1E377D0000A017D2 /* Build configuration list for PBXProject "HymnBible" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FF7ED9471E377D0000A017D2;
+			productRefGroup = FF7ED9511E377D0000A017D2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FF7ED94F1E377D0000A017D2 /* HymnBible */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FF7ED94E1E377D0000A017D2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FF7ED97C1E37A7D100A017D2 /* mic.png in Resources */,
+				FF7ED97E1E37A7D100A017D2 /* SineWaveViewController.xib in Resources */,
+				FF7ED9601E377D0000A017D2 /* Assets.xcassets in Resources */,
+				FFC4CB381E40B639002078AF /* Images.xcassets in Resources */,
+				FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */,
+				FF7ED97B1E37A7D100A017D2 /* bg.png in Resources */,
+				FF7ED95E1E377D0000A017D2 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FF7ED94C1E377D0000A017D2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6D623E1A1E405FF300B759C9 /* HTTPNetDelegate.m in Sources */,
+				FF7ED97D1E37A7D100A017D2 /* SineWaveViewController.m in Sources */,
+				FF7ED97F1E37A7D100A017D2 /* SpeechToTextModule.m in Sources */,
+				FF7ED96C1E377D3900A017D2 /* MainVC.m in Sources */,
+				FF7ED9811E37A7D100A017D2 /* WaveDisplay.m in Sources */,
+				6D623E161E405FF300B759C9 /* ASIFormDataRequest.m in Sources */,
+				6D623E1B1E405FF300B759C9 /* HTTPNetworkManager.m in Sources */,
+				6D623E1F1E40610600B759C9 /* ReachabilityWifi.m in Sources */,
+				FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */,
+				6D623E141E405FF300B759C9 /* ASIAuthenticationDialog.m in Sources */,
+				6D623E181E405FF300B759C9 /* ASIInputStream.m in Sources */,
+				6D623E191E405FF300B759C9 /* ASINetworkQueue.m in Sources */,
+				6D623E171E405FF300B759C9 /* ASIHTTPRequest.m in Sources */,
+				6D623E151E405FF300B759C9 /* ASIDownloadCache.m in Sources */,
+				FF7ED9551E377D0000A017D2 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FF7ED95C1E377D0000A017D2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF7ED95D1E377D0000A017D2 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FF7ED9651E377D0000A017D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		FF7ED9661E377D0000A017D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FF7ED9681E377D0000A017D2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HymnBible/Lib/SpeechToText",
+				);
+				INFOPLIST_FILE = HymnBible/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jcone.HymnBible;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FF7ED9691E377D0000A017D2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/HymnBible/Lib/SpeechToText",
+				);
+				INFOPLIST_FILE = HymnBible/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.jcone.HymnBible;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FF7ED94B1E377D0000A017D2 /* Build configuration list for PBXProject "HymnBible" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF7ED9651E377D0000A017D2 /* Debug */,
+				FF7ED9661E377D0000A017D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FF7ED9671E377D0000A017D2 /* Build configuration list for PBXNativeTarget "HymnBible" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF7ED9681E377D0000A017D2 /* Debug */,
+				FF7ED9691E377D0000A017D2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FF7ED9481E377D0000A017D2 /* Project object */;
+}
