@@ -12,7 +12,7 @@
 
 @interface MainVC : UIViewController<SpeechToTextModuleDelegate, ASIHTTPRequestDelegate>{
     NSString *fURL;
-    
+        
     HTTPNetworkManager *requestDownload;
     
     NSString *urlValue;
