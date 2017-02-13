@@ -32,6 +32,8 @@
 		FF7ED9811E37A7D100A017D2 /* WaveDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FFC4CB381E40B639002078AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB371E40B639002078AF /* Images.xcassets */; };
 		FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB3A1E40B9F8002078AF /* bible_kr.db */; };
+		FFFA6EF71E51DCAB001D5185 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = FFFA6EF61E51DCAB001D5185 /* close.png */; };
+		FFFA6EFA1E51DE21001D5185 /* MusicVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FFFA6EF91E51DE21001D5185 /* MusicVC.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +82,9 @@
 		FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveDisplay.m; sourceTree = "<group>"; };
 		FFC4CB371E40B639002078AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FFC4CB3A1E40B9F8002078AF /* bible_kr.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = bible_kr.db; sourceTree = "<group>"; };
+		FFFA6EF61E51DCAB001D5185 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
+		FFFA6EF81E51DE21001D5185 /* MusicVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicVC.h; sourceTree = "<group>"; };
+		FFFA6EF91E51DE21001D5185 /* MusicVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicVC.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,10 +167,13 @@
 			isa = PBXGroup;
 			children = (
 				FF7ED96F1E37A7D100A017D2 /* Lib */,
+				FFFA6EF61E51DCAB001D5185 /* close.png */,
 				FF7ED9561E377D0000A017D2 /* AppDelegate.h */,
 				FF7ED9571E377D0000A017D2 /* AppDelegate.m */,
 				FF7ED96A1E377D3900A017D2 /* MainVC.h */,
 				FF7ED96B1E377D3900A017D2 /* MainVC.m */,
+				FFFA6EF81E51DE21001D5185 /* MusicVC.h */,
+				FFFA6EF91E51DE21001D5185 /* MusicVC.m */,
 				FF7ED95C1E377D0000A017D2 /* Main.storyboard */,
 				FF7ED95F1E377D0000A017D2 /* Assets.xcassets */,
 				FF7ED9641E377D0000A017D2 /* Info.plist */,
@@ -279,6 +287,7 @@
 			files = (
 				FF7ED97C1E37A7D100A017D2 /* mic.png in Resources */,
 				FF7ED97E1E37A7D100A017D2 /* SineWaveViewController.xib in Resources */,
+				FFFA6EF71E51DCAB001D5185 /* close.png in Resources */,
 				FF7ED9601E377D0000A017D2 /* Assets.xcassets in Resources */,
 				FFC4CB381E40B639002078AF /* Images.xcassets in Resources */,
 				FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */,
@@ -308,6 +317,7 @@
 				6D623E191E405FF300B759C9 /* ASINetworkQueue.m in Sources */,
 				6D623E171E405FF300B759C9 /* ASIHTTPRequest.m in Sources */,
 				6D623E151E405FF300B759C9 /* ASIDownloadCache.m in Sources */,
+				FFFA6EFA1E51DE21001D5185 /* MusicVC.m in Sources */,
 				FF7ED9551E377D0000A017D2 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

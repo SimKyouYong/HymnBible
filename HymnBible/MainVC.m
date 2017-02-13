@@ -9,6 +9,7 @@
 #define DOCUMENT_DIRECTORY [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject]
 
 #import "MainVC.h"
+#import "MusicVC.h"
 #import <sqlite3.h>
 
 @interface MainVC ()
@@ -43,6 +44,17 @@
     NSString* decoded = [NSString stringWithFormat:@"%@", (__bridge NSString*)s];
     CFRelease(s);
     return decoded;
+}
+
+#pragma mark -
+#pragma mark StoryBoard Navigation
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue identifier] isEqualToString:@"music"])
+    {
+        MusicVC *vc = [segue destinationViewController];
+        vc.musicURL = musicURLValue;
+    }
 }
 
 #pragma mark -
@@ -101,6 +113,15 @@
             returnValue = [returnArr2 objectAtIndex:0];
             
             [self fileDown];
+        
+        // 악보 확대
+        }else if([fURL hasPrefix:@"js2ios://ImageView?"]){
+            NSArray *urlArr1 = [fURL componentsSeparatedByString:@"str="];
+            NSString *urlStr1 = [urlArr1 objectAtIndex:1];
+            NSArray *urlArr2 = [urlStr1 componentsSeparatedByString:@"&"];
+            musicURLValue = [urlArr2 objectAtIndex:0];
+            
+            [self performSegueWithIdentifier:@"music" sender:nil];
         }
         
         return NO;
