@@ -20,6 +20,7 @@
     NSString *searchValue;
     NSString *returnValue;
     NSString *nameValue;
+    NSString *musicURLValue;
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;

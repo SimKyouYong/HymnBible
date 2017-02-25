@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="3II-Aw-gvu">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -8,7 +8,30 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="VOG-uJ-TqY">
+            <objects>
+                <navigationController navigationBarHidden="YES" id="3II-Aw-gvu" sceneMemberID="viewController">
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fgc-Qs-c2r">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="gH0-76-Swa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ct1-99-MuM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1131" y="38"/>
+        </scene>
         <!--MainVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -37,14 +60,84 @@
                             <constraint firstItem="eDY-GP-e0R" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="z4t-fH-RZj"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="MC7-Wg-Mgu"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="MainWebView" destination="eDY-GP-e0R" id="Wkj-v1-0Rj"/>
+                        <segue destination="xWr-wc-ezs" kind="push" identifier="music" id="uKQ-9t-r6K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="5" y="38"/>
+        </scene>
+        <!--MusicVC-->
+        <scene sceneID="X1T-TT-yiJ">
+            <objects>
+                <viewController id="xWr-wc-ezs" customClass="MusicVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="VhF-BV-V0v"/>
+                        <viewControllerLayoutGuide type="bottom" id="rIQ-sg-rLr"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="hKl-d8-kTa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="확대보기" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eZ-qS-4zd">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="8Gl-oA-Qqs"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mpe-6V-o8h">
+                                <rect key="frame" x="550" y="0.0" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="45" id="NBf-2Z-tep"/>
+                                    <constraint firstAttribute="height" constant="45" id="Pc8-xc-yXi"/>
+                                </constraints>
+                                <state key="normal" image="close.png"/>
+                                <connections>
+                                    <action selector="closeButton:" destination="xWr-wc-ezs" eventType="touchUpInside" id="dV5-xH-Tam"/>
+                                </connections>
+                            </button>
+                            <webView contentMode="scaleToFill" scalesPageToFit="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XAL-cu-DgF">
+                                <rect key="frame" x="0.0" y="50" width="600" height="550"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="xWr-wc-ezs" id="0xZ-WF-dQc"/>
+                                </connections>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Mpe-6V-o8h" firstAttribute="top" secondItem="hKl-d8-kTa" secondAttribute="top" id="2Ke-20-Ad5"/>
+                            <constraint firstAttribute="trailing" secondItem="4eZ-qS-4zd" secondAttribute="trailing" id="5FO-uZ-GRU"/>
+                            <constraint firstAttribute="trailing" secondItem="XAL-cu-DgF" secondAttribute="trailing" id="9hR-N2-iOe"/>
+                            <constraint firstItem="XAL-cu-DgF" firstAttribute="top" secondItem="4eZ-qS-4zd" secondAttribute="bottom" id="GSK-Ov-aor"/>
+                            <constraint firstAttribute="trailing" secondItem="Mpe-6V-o8h" secondAttribute="trailing" constant="5" id="ZRH-ej-qq7"/>
+                            <constraint firstItem="XAL-cu-DgF" firstAttribute="leading" secondItem="hKl-d8-kTa" secondAttribute="leading" id="nbC-Yj-P8G"/>
+                            <constraint firstItem="4eZ-qS-4zd" firstAttribute="top" secondItem="hKl-d8-kTa" secondAttribute="top" id="ofo-6d-0Kn"/>
+                            <constraint firstItem="rIQ-sg-rLr" firstAttribute="top" secondItem="XAL-cu-DgF" secondAttribute="bottom" id="pzQ-tt-IUl"/>
+                            <constraint firstItem="4eZ-qS-4zd" firstAttribute="leading" secondItem="hKl-d8-kTa" secondAttribute="leading" id="t4J-yc-XbF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="v3I-ue-EeD"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="webview" destination="XAL-cu-DgF" id="qPm-xp-iCz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UCr-FS-nMr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1131" y="38"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="close.png" width="90" height="90"/>
+    </resources>
 </document>
