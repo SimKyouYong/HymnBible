@@ -66,6 +66,7 @@
                     <connections>
                         <outlet property="MainWebView" destination="eDY-GP-e0R" id="Wkj-v1-0Rj"/>
                         <segue destination="xWr-wc-ezs" kind="push" identifier="music" id="uKQ-9t-r6K"/>
+                        <segue destination="KuZ-oV-hmd" kind="push" identifier="map" id="1fj-gR-O8T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -135,6 +136,44 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UCr-FS-nMr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1131" y="38"/>
+        </scene>
+        <!--MapVC-->
+        <scene sceneID="1YW-gf-JcH">
+            <objects>
+                <viewController id="KuZ-oV-hmd" customClass="MapVC" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="7sg-T5-3sz"/>
+                        <viewControllerLayoutGuide type="bottom" id="s74-Yg-qha"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xCY-8h-Vgu">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="FYZ-KH-fz9">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KuZ-oV-hmd" id="4E6-t3-jAH"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="FYZ-KH-fz9" firstAttribute="top" secondItem="xCY-8h-Vgu" secondAttribute="top" id="6te-sb-aE7"/>
+                            <constraint firstItem="s74-Yg-qha" firstAttribute="top" secondItem="FYZ-KH-fz9" secondAttribute="bottom" id="QBa-ZZ-JHh"/>
+                            <constraint firstItem="FYZ-KH-fz9" firstAttribute="leading" secondItem="xCY-8h-Vgu" secondAttribute="leading" id="Xv9-0R-KaQ"/>
+                            <constraint firstAttribute="trailing" secondItem="FYZ-KH-fz9" secondAttribute="trailing" id="sj9-Ji-qsa"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="4QS-Mi-JJ7"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="600" height="600"/>
+                    <connections>
+                        <outlet property="mapView" destination="FYZ-KH-fz9" id="7C8-wS-f7r"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zug-hL-TkW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1130" y="659"/>
         </scene>
     </scenes>
     <resources>

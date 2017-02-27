@@ -10,6 +10,7 @@
 
 #import "MainVC.h"
 #import "MusicVC.h"
+#import "MapVC.h"
 #import <sqlite3.h>
 
 @interface MainVC ()
@@ -54,6 +55,11 @@
     {
         MusicVC *vc = [segue destinationViewController];
         vc.musicURL = musicURLValue;
+    }
+    if ([[segue identifier] isEqualToString:@"map"])
+    {
+        MapVC *vc = [segue destinationViewController];
+        
     }
 }
 

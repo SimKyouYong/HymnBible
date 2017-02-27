@@ -30,6 +30,10 @@
 		FF7ED97F1E37A7D100A017D2 /* SpeechToTextModule.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9771E37A7D100A017D2 /* SpeechToTextModule.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		FF7ED9801E37A7D100A017D2 /* Speex.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF7ED9781E37A7D100A017D2 /* Speex.framework */; };
 		FF7ED9811E37A7D100A017D2 /* WaveDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		FF8BE34C1E5EE03E00ECD7D3 /* MapVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8BE34B1E5EE03E00ECD7D3 /* MapVC.m */; };
+		FF8BE34E1E5EE13C00ECD7D3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8BE34D1E5EE13C00ECD7D3 /* CoreLocation.framework */; };
+		FF8BE3501E5EE14000ECD7D3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF8BE34F1E5EE14000ECD7D3 /* MapKit.framework */; };
+		FF8BE3541E5EE18300ECD7D3 /* Pin.m in Sources */ = {isa = PBXBuildFile; fileRef = FF8BE3531E5EE18300ECD7D3 /* Pin.m */; };
 		FFC4CB381E40B639002078AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB371E40B639002078AF /* Images.xcassets */; };
 		FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB3A1E40B9F8002078AF /* bible_kr.db */; };
 		FFFA6EF71E51DCAB001D5185 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = FFFA6EF61E51DCAB001D5185 /* close.png */; };
@@ -80,6 +84,12 @@
 		FF7ED9781E37A7D100A017D2 /* Speex.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Speex.framework; sourceTree = "<group>"; };
 		FF7ED9791E37A7D100A017D2 /* WaveDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaveDisplay.h; sourceTree = "<group>"; };
 		FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaveDisplay.m; sourceTree = "<group>"; };
+		FF8BE34A1E5EE03E00ECD7D3 /* MapVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapVC.h; sourceTree = "<group>"; };
+		FF8BE34B1E5EE03E00ECD7D3 /* MapVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapVC.m; sourceTree = "<group>"; };
+		FF8BE34D1E5EE13C00ECD7D3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		FF8BE34F1E5EE14000ECD7D3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		FF8BE3521E5EE18300ECD7D3 /* Pin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Pin.h; sourceTree = "<group>"; };
+		FF8BE3531E5EE18300ECD7D3 /* Pin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Pin.m; sourceTree = "<group>"; };
 		FFC4CB371E40B639002078AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FFC4CB3A1E40B9F8002078AF /* bible_kr.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = bible_kr.db; sourceTree = "<group>"; };
 		FFFA6EF61E51DCAB001D5185 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = close.png; sourceTree = "<group>"; };
@@ -92,6 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF8BE3501E5EE14000ECD7D3 /* MapKit.framework in Frameworks */,
+				FF8BE34E1E5EE13C00ECD7D3 /* CoreLocation.framework in Frameworks */,
 				6D623E241E4063F700B759C9 /* libsqlite3.0.tbd in Frameworks */,
 				6D623E221E40613100B759C9 /* libz.tbd in Frameworks */,
 				FF7ED9801E37A7D100A017D2 /* Speex.framework in Frameworks */,
@@ -140,6 +152,8 @@
 		6D623E201E40613100B759C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF8BE34F1E5EE14000ECD7D3 /* MapKit.framework */,
+				FF8BE34D1E5EE13C00ECD7D3 /* CoreLocation.framework */,
 				6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */,
 				6D623E211E40613100B759C9 /* libz.tbd */,
 			);
@@ -174,6 +188,8 @@
 				FF7ED96B1E377D3900A017D2 /* MainVC.m */,
 				FFFA6EF81E51DE21001D5185 /* MusicVC.h */,
 				FFFA6EF91E51DE21001D5185 /* MusicVC.m */,
+				FF8BE34A1E5EE03E00ECD7D3 /* MapVC.h */,
+				FF8BE34B1E5EE03E00ECD7D3 /* MapVC.m */,
 				FF7ED95C1E377D0000A017D2 /* Main.storyboard */,
 				FF7ED95F1E377D0000A017D2 /* Assets.xcassets */,
 				FF7ED9641E377D0000A017D2 /* Info.plist */,
@@ -194,6 +210,7 @@
 		FF7ED96F1E37A7D100A017D2 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				FF8BE3511E5EE18300ECD7D3 /* Pin */,
 				FFC4CB391E40B9F8002078AF /* DB */,
 				6D623E1C1E40610600B759C9 /* Reachability */,
 				6D623DFF1E405FF300B759C9 /* HTTP */,
@@ -217,6 +234,15 @@
 				FF7ED97A1E37A7D100A017D2 /* WaveDisplay.m */,
 			);
 			path = SpeechToText;
+			sourceTree = "<group>";
+		};
+		FF8BE3511E5EE18300ECD7D3 /* Pin */ = {
+			isa = PBXGroup;
+			children = (
+				FF8BE3521E5EE18300ECD7D3 /* Pin.h */,
+				FF8BE3531E5EE18300ECD7D3 /* Pin.m */,
+			);
+			path = Pin;
 			sourceTree = "<group>";
 		};
 		FFC4CB391E40B9F8002078AF /* DB */ = {
@@ -313,11 +339,13 @@
 				6D623E1B1E405FF300B759C9 /* HTTPNetworkManager.m in Sources */,
 				6D623E1F1E40610600B759C9 /* ReachabilityWifi.m in Sources */,
 				FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */,
+				FF8BE34C1E5EE03E00ECD7D3 /* MapVC.m in Sources */,
 				6D623E141E405FF300B759C9 /* ASIAuthenticationDialog.m in Sources */,
 				6D623E181E405FF300B759C9 /* ASIInputStream.m in Sources */,
 				6D623E191E405FF300B759C9 /* ASINetworkQueue.m in Sources */,
 				6D623E171E405FF300B759C9 /* ASIHTTPRequest.m in Sources */,
 				6D623E151E405FF300B759C9 /* ASIDownloadCache.m in Sources */,
+				FF8BE3541E5EE18300ECD7D3 /* Pin.m in Sources */,
 				FFFA6EFA1E51DE21001D5185 /* MusicVC.m in Sources */,
 				FF7ED9551E377D0000A017D2 /* main.m in Sources */,
 			);
