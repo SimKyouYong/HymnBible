@@ -15,9 +15,6 @@
     CLLocationManager *locationManager;
     CLLocation *startPoint;
     
-    NSMutableArray *arrayLatitude;
-    NSMutableArray *arrayLongitude;
-    
     NSMutableArray *distance;
     
     NSInteger pinArrCount;
@@ -30,6 +27,9 @@
     NSInteger loadCount;
     UILabel *bottomTitle;
     UILabel *bottomContent;
+    
+    float rLatitude;
+    float rLongitude;
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;

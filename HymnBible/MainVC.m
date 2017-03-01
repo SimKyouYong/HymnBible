@@ -31,7 +31,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://hoon86.cafe24.com/index.do"];
+    NSString *urlString = [NSString stringWithFormat:@"http://shqrp5200.cafe24.com/index.do"];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [MainWebView loadRequest:request];
@@ -65,8 +65,33 @@
 #pragma mark Button Action
 
 - (IBAction)submitButton:(id)sender {
-    alphaView.hidden = YES;
-    firstView.hidden = YES;
+    if(phoneText.text.length == 0){
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+        [alert show];
+    }else{
+        if(phoneText.text.length == 10 || phoneText.text.length == 10){
+            NSString *urlString = [NSString stringWithFormat:@"http://shqrp5200.cafe24.com/index.do?phone=%@", phoneText.text];
+            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+            [urlRequest setHTTPMethod:@"GET"];
+            NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+                NSLog(@"Response:%@ %@\n", response, error);
+                NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+                if (statusCode == 200) {
+                    alphaView.hidden = YES;
+                    firstView.hidden = YES;
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults synchronize];
+                    [defaults setObject:@"YES" forKey:@"FIRST_POPUP"];
+                }
+            }];
+            [dataTask resume];
+        }else{
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호를 잘못 입력하였습니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+    }
 }
 
 #pragma mark -
@@ -93,7 +118,7 @@
     fURL = [self decodeStr:fURL];
     NSLog(@"fURL : %@", fURL);
     
-    if([fURL hasPrefix:@"http://hoon86.cafe24.com/hymn/hymn_list.do"]){
+    if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/hymn/hymn_list.do"]){
         [self performSegueWithIdentifier:@"map" sender:nil];
     }
     
@@ -300,6 +325,14 @@
     sqlite3_close(database);
     
     [MainWebView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"javascript:%@([%@])", returnValue, sqlStr]];
+}
+
+#pragma mark -
+#pragma mark Text Field
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

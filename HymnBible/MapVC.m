@@ -32,11 +32,6 @@
     [mapView setShowsUserLocation:YES];
     [mapView setMapType:MKMapTypeStandard];
     
-    float rLatitude;
-    float rLongitude;
-    arrayLatitude = [[NSMutableArray alloc] init];
-    arrayLongitude = [[NSMutableArray alloc] init];
-    
     CLGeocoder* geocoder = [[CLGeocoder alloc] init];
     [geocoder geocodeAddressString:@"서울시 영등포구 신길동 4122번지" completionHandler:^(NSArray *placemarks, NSError *error)
      {
@@ -54,8 +49,8 @@
              CLPlacemark* p = [placemarks objectAtIndex:0];
              CLCircularRegion *circularRegion = (CLCircularRegion *)p.region;
              
-             NSLog(@"%f", circularRegion.center.latitude);
-             NSLog(@"%f", circularRegion.center.longitude);
+             rLatitude = circularRegion.center.latitude;
+             rLongitude = circularRegion.center.longitude;
              
              Pin *ann = [[Pin alloc] init];
              ann.title = @"test";
@@ -66,20 +61,24 @@
              ann.coordinate = center;
              [mapView addAnnotation:ann];
              
-             MKCoordinateRegion region;
-             MKCoordinateSpan span;
-             
-             span.latitudeDelta = 0.00001;
-             span.longitudeDelta = 0.00001;
-             
-             region.center = CLLocationCoordinate2DMake(circularRegion.center.latitude, circularRegion.center.longitude);
-             region.span = span;
-             
-             [mapView setRegion:region animated:YES];
-             [mapView setCenterCoordinate:region.center animated:YES];
-             [mapView regionThatFits:region];
+             [self performSelector:@selector(loadMap) withObject:nil afterDelay:0.5];
          }
      }];
+}
+
+- (void)loadMap{
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    
+    span.latitudeDelta = 5.0;
+    span.longitudeDelta = 5.05;
+    
+    region.center = CLLocationCoordinate2DMake(rLatitude, rLongitude);
+    region.span = span;
+    
+    [mapView setRegion:region animated:YES];
+    [mapView setCenterCoordinate:region.center animated:YES];
+    [mapView regionThatFits:region];
 }
 
 - (void)didReceiveMemoryWarning {
