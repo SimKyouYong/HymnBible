@@ -24,6 +24,13 @@
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;
+@property (weak, nonatomic) IBOutlet UIView *alphaView;
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+@property (weak, nonatomic) IBOutlet UITextField *phoneText;
+@property (weak, nonatomic) IBOutlet UITextField *addText;
+- (IBAction)submitButton:(id)sender;
+
+
 
 @property(nonatomic, strong)SpeechToTextModule *speechToTextObj;
 

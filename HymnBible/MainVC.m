@@ -20,9 +20,16 @@
 @implementation MainVC
 
 @synthesize MainWebView;
+@synthesize alphaView;
+@synthesize firstView;
+@synthesize phoneText;
+@synthesize addText;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
     NSString *urlString = [NSString stringWithFormat:@"http://hoon86.cafe24.com/index.do"];
     NSURL *url = [NSURL URLWithString:urlString];
@@ -32,6 +39,13 @@
     self.speechToTextObj = [[SpeechToTextModule alloc] initWithCustomDisplay:@"SineWaveViewController"];
     [self.speechToTextObj setDelegate:self];
     [self.view sendSubviewToBack:MainWebView];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    if([defaults stringForKey:@"FIRST_POPUP"].length == 0){
+        alphaView.hidden = NO;
+        firstView.hidden = NO;
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -48,6 +62,14 @@
 }
 
 #pragma mark -
+#pragma mark Button Action
+
+- (IBAction)submitButton:(id)sender {
+    alphaView.hidden = YES;
+    firstView.hidden = YES;
+}
+
+#pragma mark -
 #pragma mark StoryBoard Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -58,7 +80,7 @@
     }
     if ([[segue identifier] isEqualToString:@"map"])
     {
-        MapVC *vc = [segue destinationViewController];
+        //MapVC *vc = [segue destinationViewController];
         
     }
 }
@@ -70,6 +92,10 @@
     fURL = [NSString stringWithFormat:@"%@", request.URL];
     fURL = [self decodeStr:fURL];
     NSLog(@"fURL : %@", fURL);
+    
+    if([fURL hasPrefix:@"http://hoon86.cafe24.com/hymn/hymn_list.do"]){
+        [self performSegueWithIdentifier:@"map" sender:nil];
+    }
     
     if ([[[request URL] absoluteString] hasPrefix:@"js2ios:"]){
         
@@ -128,6 +154,10 @@
             musicURLValue = [urlArr2 objectAtIndex:0];
             
             [self performSegueWithIdentifier:@"music" sender:nil];
+        
+        // 교회 찾기
+        }else if([fURL hasPrefix:@"http://hoon86.cafe24.com/hymn/hymn_list.do"]){
+            [self performSegueWithIdentifier:@"map" sender:nil];
         }
         
         return NO;

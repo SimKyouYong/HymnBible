@@ -33,5 +33,10 @@
 }
 
 @property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UITextField *addressText;
+
+- (IBAction)backButton:(id)sender;
+- (IBAction)searchButton:(id)sender;
+- (IBAction)sstButton:(id)sender;
 
 @end
