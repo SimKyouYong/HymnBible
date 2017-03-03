@@ -10,7 +10,7 @@
 
 @implementation Pin
 
-@synthesize coordinate, title, subtitle;
+@synthesize coordinate, thumbImage, title, subtitle;
 
 @end
 

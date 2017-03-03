@@ -13,10 +13,12 @@
 @interface Pin : NSObject <MKAnnotation> {
 	
 	CLLocationCoordinate2D coordinate;
+    UIImageView *thumbImage;
 	NSString *title;
 	NSString *subtitle;
 }
 @property (nonatomic, assign) CLLocationCoordinate2D coordinate;
+@property (nonatomic, copy) UIImageView *thumbImage;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *subtitle;
 

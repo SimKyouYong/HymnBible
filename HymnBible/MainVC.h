@@ -21,6 +21,10 @@
     NSString *returnValue;
     NSString *nameValue;
     NSString *musicURLValue;
+    
+    UIActivityIndicatorView *activityView;
+    UIView *loadingView;
+    UILabel *loadingLabel;
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;
@@ -29,8 +33,14 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneText;
 @property (weak, nonatomic) IBOutlet UITextField *addText;
 - (IBAction)submitButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *agreeCheckButton;
+- (IBAction)agreeCheckButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *agreeTextButton;
+- (IBAction)agreeTextButton:(id)sender;
 
-
+@property (weak, nonatomic) IBOutlet UIView *addView;
+@property (weak, nonatomic) IBOutlet UITextField *addText2;
+- (IBAction)submitButton2:(id)sender;
 
 @property(nonatomic, strong)SpeechToTextModule *speechToTextObj;
 

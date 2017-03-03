@@ -18,6 +18,12 @@
 		6D623E1F1E40610600B759C9 /* ReachabilityWifi.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E1E1E40610600B759C9 /* ReachabilityWifi.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6D623E221E40613100B759C9 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D623E211E40613100B759C9 /* libz.tbd */; };
 		6D623E241E4063F700B759C9 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */; };
+		EA246E411E68F70E00893023 /* check_off.png in Resources */ = {isa = PBXBuildFile; fileRef = EA246E3F1E68F70E00893023 /* check_off.png */; };
+		EA246E421E68F70E00893023 /* check_on.png in Resources */ = {isa = PBXBuildFile; fileRef = EA246E401E68F70E00893023 /* check_on.png */; };
+		EA246E4A1E690B9800893023 /* JPSThumbnail.m in Sources */ = {isa = PBXBuildFile; fileRef = EA246E451E690B9800893023 /* JPSThumbnail.m */; };
+		EA246E4B1E690B9800893023 /* JPSThumbnailAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EA246E471E690B9800893023 /* JPSThumbnailAnnotation.m */; };
+		EA246E4C1E690B9800893023 /* JPSThumbnailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA246E491E690B9800893023 /* JPSThumbnailAnnotationView.m */; };
+		EA246E4E1E691FB800893023 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA246E4D1E691FB800893023 /* UserNotifications.framework */; };
 		FF7ED9551E377D0000A017D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9541E377D0000A017D2 /* main.m */; };
 		FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9571E377D0000A017D2 /* AppDelegate.m */; };
 		FF7ED95E1E377D0000A017D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED95C1E377D0000A017D2 /* Main.storyboard */; };
@@ -68,6 +74,16 @@
 		6D623E1E1E40610600B759C9 /* ReachabilityWifi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ReachabilityWifi.m; sourceTree = "<group>"; };
 		6D623E211E40613100B759C9 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		EA246E3E1E68F12B00893023 /* GlobalHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GlobalHeader.h; sourceTree = "<group>"; };
+		EA246E3F1E68F70E00893023 /* check_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_off.png; sourceTree = "<group>"; };
+		EA246E401E68F70E00893023 /* check_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = check_on.png; sourceTree = "<group>"; };
+		EA246E441E690B9800893023 /* JPSThumbnail.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnail.h; sourceTree = "<group>"; };
+		EA246E451E690B9800893023 /* JPSThumbnail.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumbnail.m; sourceTree = "<group>"; };
+		EA246E461E690B9800893023 /* JPSThumbnailAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnailAnnotation.h; sourceTree = "<group>"; };
+		EA246E471E690B9800893023 /* JPSThumbnailAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumbnailAnnotation.m; sourceTree = "<group>"; };
+		EA246E481E690B9800893023 /* JPSThumbnailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnailAnnotationView.h; sourceTree = "<group>"; };
+		EA246E491E690B9800893023 /* JPSThumbnailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumbnailAnnotationView.m; sourceTree = "<group>"; };
+		EA246E4D1E691FB800893023 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		FF7ED9501E377D0000A017D2 /* HymnBible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HymnBible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF7ED9541E377D0000A017D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FF7ED9561E377D0000A017D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -108,6 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA246E4E1E691FB800893023 /* UserNotifications.framework in Frameworks */,
 				FF8BE3501E5EE14000ECD7D3 /* MapKit.framework in Frameworks */,
 				FF8BE34E1E5EE13C00ECD7D3 /* CoreLocation.framework in Frameworks */,
 				6D623E241E4063F700B759C9 /* libsqlite3.0.tbd in Frameworks */,
@@ -158,12 +175,26 @@
 		6D623E201E40613100B759C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EA246E4D1E691FB800893023 /* UserNotifications.framework */,
 				FF8BE34F1E5EE14000ECD7D3 /* MapKit.framework */,
 				FF8BE34D1E5EE13C00ECD7D3 /* CoreLocation.framework */,
 				6D623E231E4063F700B759C9 /* libsqlite3.0.tbd */,
 				6D623E211E40613100B759C9 /* libz.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EA246E431E690B9800893023 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				EA246E441E690B9800893023 /* JPSThumbnail.h */,
+				EA246E451E690B9800893023 /* JPSThumbnail.m */,
+				EA246E461E690B9800893023 /* JPSThumbnailAnnotation.h */,
+				EA246E471E690B9800893023 /* JPSThumbnailAnnotation.m */,
+				EA246E481E690B9800893023 /* JPSThumbnailAnnotationView.h */,
+				EA246E491E690B9800893023 /* JPSThumbnailAnnotationView.m */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		FF7ED9471E377D0000A017D2 = {
@@ -187,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				FF7ED96F1E37A7D100A017D2 /* Lib */,
+				EA246E3E1E68F12B00893023 /* GlobalHeader.h */,
 				FF7ED9561E377D0000A017D2 /* AppDelegate.h */,
 				FF7ED9571E377D0000A017D2 /* AppDelegate.m */,
 				FF7ED96A1E377D3900A017D2 /* MainVC.h */,
@@ -216,6 +248,7 @@
 		FF7ED96F1E37A7D100A017D2 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				EA246E431E690B9800893023 /* Map */,
 				FF8BE3511E5EE18300ECD7D3 /* Pin */,
 				FFC4CB391E40B9F8002078AF /* DB */,
 				6D623E1C1E40610600B759C9 /* Reachability */,
@@ -254,6 +287,8 @@
 		FF93753E1E66E86800462818 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				EA246E3F1E68F70E00893023 /* check_off.png */,
+				EA246E401E68F70E00893023 /* check_on.png */,
 				FF93753F1E66E86800462818 /* close.png */,
 				FF9375401E66E86800462818 /* menu_icon.png */,
 				FF9375411E66E86800462818 /* search01.png */,
@@ -329,10 +364,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EA246E411E68F70E00893023 /* check_off.png in Resources */,
 				FF9375431E66E86800462818 /* close.png in Resources */,
 				FF7ED97C1E37A7D100A017D2 /* mic.png in Resources */,
 				FF7ED97E1E37A7D100A017D2 /* SineWaveViewController.xib in Resources */,
 				FF7ED9601E377D0000A017D2 /* Assets.xcassets in Resources */,
+				EA246E421E68F70E00893023 /* check_on.png in Resources */,
 				FF9375441E66E86800462818 /* menu_icon.png in Resources */,
 				FFC4CB381E40B639002078AF /* Images.xcassets in Resources */,
 				FF9375461E66E86800462818 /* search02.png in Resources */,
@@ -353,12 +390,15 @@
 				6D623E1A1E405FF300B759C9 /* HTTPNetDelegate.m in Sources */,
 				FF7ED97D1E37A7D100A017D2 /* SineWaveViewController.m in Sources */,
 				FF7ED97F1E37A7D100A017D2 /* SpeechToTextModule.m in Sources */,
+				EA246E4B1E690B9800893023 /* JPSThumbnailAnnotation.m in Sources */,
 				FF7ED96C1E377D3900A017D2 /* MainVC.m in Sources */,
 				FF7ED9811E37A7D100A017D2 /* WaveDisplay.m in Sources */,
 				6D623E161E405FF300B759C9 /* ASIFormDataRequest.m in Sources */,
 				6D623E1B1E405FF300B759C9 /* HTTPNetworkManager.m in Sources */,
 				6D623E1F1E40610600B759C9 /* ReachabilityWifi.m in Sources */,
+				EA246E4A1E690B9800893023 /* JPSThumbnail.m in Sources */,
 				FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */,
+				EA246E4C1E690B9800893023 /* JPSThumbnailAnnotationView.m in Sources */,
 				FF8BE34C1E5EE03E00ECD7D3 /* MapVC.m in Sources */,
 				6D623E141E405FF300B759C9 /* ASIAuthenticationDialog.m in Sources */,
 				6D623E181E405FF300B759C9 /* ASIInputStream.m in Sources */,

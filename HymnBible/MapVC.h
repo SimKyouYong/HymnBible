@@ -30,9 +30,18 @@
     
     float rLatitude;
     float rLongitude;
+    
+    NSArray *churchArr;
+    NSInteger arrIndexNum;
+    
+    MKMapView *mkMapView;
+    
+    NSInteger mapFirstCheck;
 }
 
-@property (weak, nonatomic) IBOutlet MKMapView *mapView;
+@property (weak, nonatomic) IBOutlet UIView *mkView;
+@property (weak, nonatomic) IBOutlet UITableView *mapTableView;
+
 @property (weak, nonatomic) IBOutlet UITextField *addressText;
 
 - (IBAction)backButton:(id)sender;

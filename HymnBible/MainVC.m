@@ -12,6 +12,7 @@
 #import "MusicVC.h"
 #import "MapVC.h"
 #import <sqlite3.h>
+#import "GlobalHeader.h"
 
 @interface MainVC ()
 
@@ -24,6 +25,10 @@
 @synthesize firstView;
 @synthesize phoneText;
 @synthesize addText;
+@synthesize agreeCheckButton;
+@synthesize agreeTextButton;
+@synthesize addView;
+@synthesize addText2;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -31,7 +36,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    NSString *urlString = [NSString stringWithFormat:@"http://shqrp5200.cafe24.com/index.do"];
+    NSString *urlString = [NSString stringWithFormat:MAIN_URL];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [MainWebView loadRequest:request];
@@ -42,9 +47,14 @@
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
-    if([defaults stringForKey:@"FIRST_POPUP"].length == 0){
-        alphaView.hidden = NO;
-        firstView.hidden = NO;
+    if([defaults stringForKey:POPUP_CHECK].length == 0){
+        //alphaView.hidden = NO;
+        //firstView.hidden = NO;
+        
+        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"개인정보이용동의"];
+        [title addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, [title length])];
+        [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [title length])];
+        [agreeTextButton setAttributedTitle:title forState:UIControlStateNormal];
     }
 }
 
@@ -68,30 +78,101 @@
     if(phoneText.text.length == 0){
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
         [alert show];
-    }else{
-        if(phoneText.text.length == 10 || phoneText.text.length == 10){
-            NSString *urlString = [NSString stringWithFormat:@"http://shqrp5200.cafe24.com/index.do?phone=%@", phoneText.text];
-            NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-            NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
-            NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-            [urlRequest setHTTPMethod:@"GET"];
-            NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-                NSLog(@"Response:%@ %@\n", response, error);
-                NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-                if (statusCode == 200) {
+        
+        return;
+    }
+    if(agreeCheckButton.selected == 0){
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"개인정보이용 동의에 체크해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+        [alert show];
+        
+        return;
+    }
+    
+    [self loadingInit];
+    
+    if(phoneText.text.length == 10 || phoneText.text.length == 10){
+        NSString *urlString = [NSString stringWithFormat:@"%@/index.do?phone=%@", MAIN_URL, phoneText.text];
+        NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+        NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+        NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        [urlRequest setHTTPMethod:@"GET"];
+        NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+            NSLog(@"Response:%@ %@\n", response, error);
+            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+            if (statusCode == 200) {
+                if(addText.text.length == 0){
                     alphaView.hidden = YES;
                     firstView.hidden = YES;
+                    [self loadingClose];
+                    
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults synchronize];
-                    [defaults setObject:@"YES" forKey:@"FIRST_POPUP"];
+                    [defaults setObject:@"YES" forKey:POPUP_CHECK];
+                    [defaults setObject:phoneText.text forKey:MY_ID];
+                }else{
+                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                    [defaults synchronize];
+                    [defaults setObject:phoneText.text forKey:MY_ID];
+                    [self httpInit2];
                 }
-            }];
-            [dataTask resume];
+            }
+        }];
+        [dataTask resume];
+    }else{
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호를 잘못 입력하였습니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+}
+
+- (IBAction)agreeCheckButton:(id)sender {
+    UIButton *button = (UIButton *) sender;
+    button.selected = !button.selected;
+    
+    if(button.selected == 1){
+        [agreeCheckButton setImage:[UIImage imageNamed:@"check_on"] forState:UIControlStateNormal];
+    }else{
+        [agreeCheckButton setImage:[UIImage imageNamed:@"check_off"] forState:UIControlStateNormal];
+    }
+}
+
+- (IBAction)agreeTextButton:(id)sender {
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.naver.com"]];
+}
+
+// 추천인 있으면 통신
+- (void)httpInit2{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@/recommender-proc.do", MAIN_URL];
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSString * params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [defaults stringForKey:MY_ID], addText.text];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        //NSLog(@"Response:%@ %@\n", response, error);
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+        if (statusCode == 200) {
+            
         }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호를 잘못 입력하였습니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"통신에러" delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
             [alert show];
         }
-    }
+        
+        alphaView.hidden = YES;
+        firstView.hidden = YES;
+        [self loadingClose];
+    }];
+    [dataTask resume];
+}
+
+// 추천인 팝업뷰
+- (IBAction)submitButton2:(id)sender {
+    [self httpInit2];
 }
 
 #pragma mark -
@@ -118,6 +199,7 @@
     fURL = [self decodeStr:fURL];
     NSLog(@"fURL : %@", fURL);
     
+    // 지도 테스트(삭제해야함)
     if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/hymn/hymn_list.do"]){
         [self performSegueWithIdentifier:@"map" sender:nil];
     }
@@ -252,7 +334,7 @@
 
 - (void)fileDown{
     NSLog(@"%@", DOCUMENT_DIRECTORY);
-    NSString *downloadURL = [NSString stringWithFormat:@"http://hoon86.cafe24.com/db/%@", urlValue];;
+    NSString *downloadURL = [NSString stringWithFormat:@"%@/db/%@", MAIN_URL, urlValue];;
     NSString *filePath = [NSString stringWithFormat:@"%@/%@", DOCUMENT_DIRECTORY, urlValue];
     BOOL fileExists = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
     
@@ -333,6 +415,39 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     [textField resignFirstResponder];
     return YES;
+}
+
+#pragma mark -
+#pragma mark Loading Method
+
+- (void)loadingInit{
+    // 로딩관련
+    loadingView = [[UIView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - 170)/2, (self.view.frame.size.height - 170)/2, 170, 170)];
+    loadingView.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.5];
+    loadingView.clipsToBounds = YES;
+    loadingView.layer.cornerRadius = 10.0;
+    
+    activityView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+    activityView.frame = CGRectMake(65, 40, activityView.bounds.size.width, activityView.bounds.size.height);
+    [loadingView addSubview:activityView];
+    
+    loadingLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 115, 130, 42)];
+    loadingLabel.backgroundColor = [UIColor clearColor];
+    loadingLabel.numberOfLines = 2;
+    loadingLabel.textColor = [UIColor whiteColor];
+    loadingLabel.adjustsFontSizeToFitWidth = YES;
+    loadingLabel.textAlignment = NSTextAlignmentCenter;
+    loadingLabel.text = [NSString stringWithFormat:@"로딩중..."];
+    [loadingView addSubview:loadingLabel];
+    
+    [self.view addSubview:loadingView];
+    [self.view bringSubviewToFront:loadingView];
+    [activityView startAnimating];
+}
+
+- (void)loadingClose{
+    loadingView.hidden = YES;
+    [activityView stopAnimating];
 }
 
 @end
