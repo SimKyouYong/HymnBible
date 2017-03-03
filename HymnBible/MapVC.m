@@ -18,6 +18,7 @@
 
 @synthesize mkView;
 @synthesize addressText;
+@synthesize mapTableView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -144,6 +145,8 @@
     [mkMapView setRegion:region animated:YES];
     [mkMapView setCenterCoordinate:region.center animated:YES];
     [mkMapView regionThatFits:region];
+    
+    [mapTableView reloadData];
 }
 #pragma mark -
 #pragma mark Button Action
@@ -227,7 +230,7 @@
     addrLabel.text = [dic objectForKey:@"church_address"];
     numberLabel.text = [dic objectForKey:@"church_number"];
     
-    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, 99, self.view.frame.size.width, 0.5)];
+    UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(0, 99, self.view.frame.size.width - 40, 0.5)];
     lineView.backgroundColor = [UIColor grayColor];
     [cell addSubview:lineView];
     
