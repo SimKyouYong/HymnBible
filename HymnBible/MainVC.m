@@ -265,6 +265,36 @@
         // 교회 찾기
         }else if([fURL hasPrefix:@"http://hoon86.cafe24.com/hymn/hymn_list.do"]){
             [self performSegueWithIdentifier:@"map" sender:nil];
+        
+            // 설정(푸시)
+        }else if([fURL hasPrefix:@"js2ios://GetPush?"]){
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            
+            NSArray *urlArr1 = [fURL componentsSeparatedByString:@"str="];
+            NSString *urlStr1 = [urlArr1 objectAtIndex:1];
+            NSArray *urlArr2 = [urlStr1 componentsSeparatedByString:@"&"];
+            NSString *pushValue = [urlArr2 objectAtIndex:0];
+            NSLog(@"%@", pushValue);
+            
+            NSString *srciptValue = @"";
+            if([pushValue isEqualToString:@"ALL"]){
+                srciptValue = [NSString stringWithFormat:@"javascript:return_fun('PUSH','PUSHSOUND','PUSHVALIT')"];
+                
+                [defaults setObject:@"ALL" forKey:PUSH_SETTING];
+            }else{
+                if([pushValue isEqualToString:@""]){
+                    srciptValue = [NSString stringWithFormat:@"javascript:return_fun('off')"];
+                    
+                    [defaults setObject:@"off" forKey:PUSH_SETTING];
+                }else{
+                    srciptValue = [NSString stringWithFormat:@"javascript:return_fun('%@')", pushValue];
+                    
+                    [defaults setObject:pushValue forKey:PUSH_SETTING];
+                }
+            }
+            
+            [MainWebView stringByEvaluatingJavaScriptFromString:pushValue];
         }
         
         return NO;
