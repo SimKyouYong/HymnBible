@@ -44,7 +44,118 @@
     rLatitude = 37.476390;
     rLongitude = 126.885635;
     
-    [self mapImageTextSetting];
+    arrayLatitude = [[NSMutableArray alloc] init];
+    arrayLongitude = [[NSMutableArray alloc] init];
+    
+    /*
+    for (int i = 0 ; i < pinArrCount; i ++) {
+        if(pinArrCount != 1){
+            mapDic = [reMapArr objectAtIndex:i];
+        }
+        if(![[mapDic objectForKey:@"place_name_kr"] isEqualToString:@""]){
+            rLatitude = [[mapDic objectForKey:@"latitude"] floatValue];
+            rLongitude = [[mapDic objectForKey:@"hardness"] floatValue];
+            
+            NSNumber *temLatitude = [NSNumber numberWithFloat:rLatitude];
+            NSNumber *temrLongitude = [NSNumber numberWithFloat:rLongitude];
+            [arrayLatitude addObject:temLatitude];
+            [arrayLongitude addObject:temrLongitude];
+        }
+    }
+     */
+    
+    NSNumber *temLatitude = [NSNumber numberWithFloat:rLatitude];
+    NSNumber *temrLongitude = [NSNumber numberWithFloat:rLongitude];
+    [arrayLatitude addObject:temLatitude];
+    [arrayLongitude addObject:temrLongitude];
+    
+    Pin *ann = [[Pin alloc] init];
+    ann.title = [NSString stringWithFormat:@"%@", @"테스트"];
+    ann.subtitle = [NSString stringWithFormat:@"%@", @"서브"];
+    CLLocationCoordinate2D center;
+    center.latitude = [[arrayLatitude objectAtIndex:0] doubleValue];
+    center.longitude = [[arrayLongitude objectAtIndex:0] doubleValue];
+    ann.coordinate = center;
+    [mkMapView addAnnotation:ann];
+    
+    /*
+    for (int i = 0; i < pinArrCount; i++) {
+        if(pinArrCount != 1){
+            mapDic = [reMapArr objectAtIndex:i];
+        }
+        if(![[mapDic objectForKey:@"place_name_kr"] isEqualToString:@""]){
+            Pin *ann = [[Pin alloc] init];
+            ann.title = [NSString stringWithFormat:@"%@", [mapDic objectForKey:@"place_name_kr"]];
+            ann.subtitle = [NSString stringWithFormat:@"%@", [mapDic objectForKey:@"icon_small"]];
+            CLLocationCoordinate2D center;
+            center.latitude = [[arrayLatitude objectAtIndex:i] doubleValue];
+            center.longitude = [[arrayLongitude objectAtIndex:i] doubleValue];
+            ann.coordinate = center;
+            [audioMapView addAnnotation:ann];
+        }
+    }
+     */
+    
+    MKCoordinateRegion region;
+    MKCoordinateSpan span;
+    
+    span.latitudeDelta = 0.002;
+    span.longitudeDelta = 0.002;
+    
+    region.center = CLLocationCoordinate2DMake([[arrayLatitude objectAtIndex:0] floatValue], [[arrayLongitude objectAtIndex:0] floatValue]);
+    region.span = span;
+    
+    [mkMapView setRegion:region animated:YES];
+    [mkMapView setCenterCoordinate:region.center animated:YES];
+    [mkMapView regionThatFits:region];
+    
+    //[self mapImageTextSetting];
+}
+
+- (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation {
+    static NSString *placeMarkIdentifier = @"my annotation identifier";
+    
+    if ([annotation isKindOfClass:[Pin class]]) {
+        MKAnnotationView *annotationView = (MKPinAnnotationView *)[mkMapView dequeueReusableAnnotationViewWithIdentifier:placeMarkIdentifier];
+        if (annotationView == nil) {
+            annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:placeMarkIdentifier];
+            annotationView.image = [UIImage imageNamed:@"pin"];//[annotation subtitle]];
+            annotationView.canShowCallout = YES;
+            //annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+            UIImageView *myImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search01"]];
+            myImageView.frame = CGRectMake(0,0,31,31); // Change the size of the image to fit the callout
+            
+            // Change this to rightCallout... to move the image to the right side
+            annotationView.leftCalloutAccessoryView = myImageView;
+            myImageView = nil;
+        }
+        else
+            annotationView.annotation = annotation;
+        return annotationView;
+    }
+    return nil;
+}
+
+- (void)mapView:(MKMapView *)mapView annotationView:(MKAnnotationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    /*
+    if(![mapCount isEqualToString:@"1"]){
+        mapTitleClickArr = [[NSMutableArray alloc] init];
+        id AppID = [[UIApplication sharedApplication] delegate];
+        mapTitleClickArr = [AppID selectMapCityName:view.annotation.title];
+        mapTitle = view.annotation.title;
+        bottomImageView.image = nil;
+        bottomTitle.text = @"";
+        bottomContent.text = @"";
+        loadCount = 2;
+        //[self mapUILoad];
+    }
+     */
+}
+
+- (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view
+{
+    
 }
 
 - (void)churchJsonParsing{
@@ -64,7 +175,7 @@
         churchArr = [NSJSONSerialization JSONObjectWithData:[returnStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
         
         NSLog(@"%@", churchArr);
-        [self mapImageTextSetting];
+        //[self mapImageTextSetting];
         if (statusCode == 200) {
             
         }else{
@@ -81,7 +192,7 @@
 
 #pragma mark -
 #pragma mark Map Delegate
-
+/*
 - (void)mapView:(MKMapView *)mapView didSelectAnnotationView:(MKAnnotationView *)view {
     if ([view conformsToProtocol:@protocol(JPSThumbnailAnnotationViewProtocol)]) {
         [((NSObject<JPSThumbnailAnnotationViewProtocol> *)view) didSelectAnnotationViewInMap:mapView];
@@ -148,6 +259,8 @@
     
     [mapTableView reloadData];
 }
+ */
+
 #pragma mark -
 #pragma mark Button Action
 
@@ -158,7 +271,7 @@
 - (IBAction)searchButton:(id)sender {
     mapFirstCheck = 1;
     
-    [self churchJsonParsing];
+    //[self churchJsonParsing];
     
     /*
     if(addressText.text.length != 0){

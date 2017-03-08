@@ -37,6 +37,9 @@
     MKMapView *mkMapView;
     
     NSInteger mapFirstCheck;
+    
+    NSMutableArray *arrayLatitude;
+    NSMutableArray *arrayLongitude;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *mkView;

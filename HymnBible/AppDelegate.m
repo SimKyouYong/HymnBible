@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GlobalHeader.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 #define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -59,6 +60,21 @@
         }
     }
     
+    // 푸시관련
+    NSDictionary *userInfo = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
+    if (userInfo != nil) {
+        NSString* payload = [userInfo objectForKey:@"p"];
+        if (payload != nil) {
+            NSLog(@"push notification with payload: %@", payload);
+        }
+    }
+    
+    // 사운드
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"empty" ofType:@"mp3"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
+    //AudioServicesPlaySystemSound (soundID);
+    
     return YES;
 }
 
@@ -93,7 +109,7 @@
     //NSLog(@"didFailToRegisterForRemoteNotificationsWithError : %@", error);
 }
 
-// 어플리케이션이 실행줄일 때 노티피케이션을 받았을떄 호출됨
+// 어플리케이션이 실행중일 때 노티피케이션을 받았을떄 호출됨
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
     NSLog(@"userInfo %@", userInfo);
 }

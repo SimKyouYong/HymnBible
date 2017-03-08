@@ -198,12 +198,7 @@
     fURL = [NSString stringWithFormat:@"%@", request.URL];
     fURL = [self decodeStr:fURL];
     NSLog(@"fURL : %@", fURL);
-    
-    // 지도 테스트(삭제해야함)
-    if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/hymn/hymn_list.do"]){
-        [self performSegueWithIdentifier:@"map" sender:nil];
-    }
-    
+
     if ([[[request URL] absoluteString] hasPrefix:@"js2ios:"]){
         
         // SST
@@ -263,7 +258,7 @@
             [self performSegueWithIdentifier:@"music" sender:nil];
         
         // 교회 찾기
-        }else if([fURL hasPrefix:@"http://hoon86.cafe24.com/hymn/hymn_list.do"]){
+        }else if([fURL hasPrefix:@"js2ios://ChurchSearch?"]){
             [self performSegueWithIdentifier:@"map" sender:nil];
         
             // 설정(푸시)
