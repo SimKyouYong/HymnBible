@@ -52,8 +52,8 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     if([defaults stringForKey:POPUP_CHECK].length == 0){
-        //alphaView.hidden = NO;
-        //firstView.hidden = NO;
+        alphaView.hidden = NO;
+        firstView.hidden = NO;
         
         NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"개인정보이용동의"];
         [title addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, [title length])];
@@ -98,20 +98,19 @@
     
     [self loadingInit];
     
-    if(phoneText.text.length == 10 || phoneText.text.length == 10){
-        NSString *urlString = [NSString stringWithFormat:@"%@/index.do?phone=%@", MAIN_URL, phoneText.text];
+    if(phoneText.text.length == 10 || phoneText.text.length == 11){
+        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, phoneText.text];
         NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
         NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
         NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
         [urlRequest setHTTPMethod:@"GET"];
         NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSLog(@"Response:%@ %@\n", response, error);
+            //NSLog(@"Response:%@ %@\n", response, error);
             NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
             if (statusCode == 200) {
                 if(addText.text.length == 0){
                     alphaView.hidden = YES;
                     firstView.hidden = YES;
-                    [self loadingClose];
                     
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults synchronize];
@@ -121,14 +120,17 @@
                     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                     [defaults synchronize];
                     [defaults setObject:phoneText.text forKey:MY_ID];
-                    [self httpInit2];
                 }
+                
+                [self httpInit1];
             }
         }];
         [dataTask resume];
     }else{
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호를 잘못 입력하였습니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
         [alert show];
+        
+        [self loadingClose];
     }
 }
 
@@ -147,17 +149,50 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.naver.com"]];
 }
 
+// 최초 폰번호 겟으로 통신 후 토큰키 포스트로
+- (void)httpInit1{
+    [phoneText resignFirstResponder];
+    [addText resignFirstResponder];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@", DB_ADD_URL];
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSString *params = [NSString stringWithFormat:@"phone=%@&reg_id=%@&type=ios", phoneText.text, [defaults stringForKey:TOKEN_KEY]];
+    
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        //NSLog(@"Response:%@ %@\n", response, error);
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+        if (statusCode == 200) {
+            if(addText.text.length == 0){
+                alphaView.hidden = YES;
+                firstView.hidden = YES;
+                [self loadingClose];
+            }else{
+                [self httpInit2];
+            }
+        }
+    }];
+    [dataTask resume];
+}
+
 // 추천인 있으면 통신
 - (void)httpInit2{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/recommender-proc.do", MAIN_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@json/recommender-proc.do", MAIN_URL];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString * params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [defaults stringForKey:MY_ID], addText.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [defaults stringForKey:MY_ID], addText.text];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -310,11 +345,13 @@
 // 웹뷰가 컨텐츠를 읽기 시작한 후에 실행된다.
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     //NSLog(@"start");
+    
+    [self loadingInit];
 }
 
 // 웹뷰가 컨텐츠를 모두 읽은 후에 실행된다.
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
-    
+    [self loadingClose];
 }
 
 // 컨텐츠를 읽는 도중 오류가 발생할 경우 실행된다.

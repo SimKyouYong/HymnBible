@@ -69,12 +69,6 @@
         }
     }
     
-    // 사운드
-    NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"empty" ofType:@"mp3"];
-    SystemSoundID soundID;
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
-    //AudioServicesPlaySystemSound (soundID);
-    
     return YES;
 }
 
@@ -111,7 +105,27 @@
 
 // 어플리케이션이 실행중일 때 노티피케이션을 받았을떄 호출됨
 - (void) application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo{
-    NSLog(@"userInfo %@", userInfo);
+    NSDictionary *dic = [userInfo objectForKey:@"aps"];
+    NSLog(@"userInfo %@", dic);
+    
+    NSRange subRange;
+    subRange = [[dic objectForKey:@"sound"] rangeOfString:@"."];
+    NSString *soundValue = nil;
+    if (subRange.location != NSNotFound){
+        soundValue = @"empty";
+    }else{
+        soundValue = @"default";
+    }
+    
+    // 사운드
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:soundValue ofType:@"mp3"];
+    SystemSoundID soundID;
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: soundPath], &soundID);
+    AudioServicesPlaySystemSound (soundID);
+    
+    // 알럿
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"알림" message:[dic objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+    [alert show];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

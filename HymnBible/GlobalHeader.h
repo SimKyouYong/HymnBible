@@ -7,7 +7,8 @@
 //
 
 // URL
-#define MAIN_URL            @"http://shqrp5200.cafe24.com/index.do"
+#define MAIN_URL            @"http://shqrp5200.cafe24.com/"
+#define DB_ADD_URL          @"http://shqrp5200.cafe24.com/json/updateRegid.do"
 #define SEARCH_URL          @"http://shqrp5200.cafe24.com/searchChurchJson.do"
 
 // NSUserDefault

@@ -45,6 +45,7 @@
 		FF9375441E66E86800462818 /* menu_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = FF9375401E66E86800462818 /* menu_icon.png */; };
 		FF9375451E66E86800462818 /* search01.png in Resources */ = {isa = PBXBuildFile; fileRef = FF9375411E66E86800462818 /* search01.png */; };
 		FF9375461E66E86800462818 /* search02.png in Resources */ = {isa = PBXBuildFile; fileRef = FF9375421E66E86800462818 /* search02.png */; };
+		FFACC2DC1E717A96003FACB8 /* default.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FFACC2DB1E717A96003FACB8 /* default.mp3 */; };
 		FFC4CB381E40B639002078AF /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB371E40B639002078AF /* Images.xcassets */; };
 		FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */ = {isa = PBXBuildFile; fileRef = FFC4CB3A1E40B9F8002078AF /* bible_kr.db */; };
 		FFFA6EFA1E51DE21001D5185 /* MusicVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FFFA6EF91E51DE21001D5185 /* MusicVC.m */; };
@@ -115,6 +116,7 @@
 		FF9375401E66E86800462818 /* menu_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu_icon.png; sourceTree = "<group>"; };
 		FF9375411E66E86800462818 /* search01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search01.png; sourceTree = "<group>"; };
 		FF9375421E66E86800462818 /* search02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search02.png; sourceTree = "<group>"; };
+		FFACC2DB1E717A96003FACB8 /* default.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = default.mp3; sourceTree = "<group>"; };
 		FFC4CB371E40B639002078AF /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		FFC4CB3A1E40B9F8002078AF /* bible_kr.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = bible_kr.db; sourceTree = "<group>"; };
 		FFFA6EF81E51DE21001D5185 /* MusicVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicVC.h; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 		FF93753E1E66E86800462818 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FFACC2DB1E717A96003FACB8 /* default.mp3 */,
 				2928695A1E6F9D60004ADF76 /* pin.png */,
 				292869561E6F931A004ADF76 /* empty.mp3 */,
 				EA246E3F1E68F70E00893023 /* check_off.png */,
@@ -386,6 +389,7 @@
 				FF9375461E66E86800462818 /* search02.png in Resources */,
 				FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */,
 				FF9375451E66E86800462818 /* search01.png in Resources */,
+				FFACC2DC1E717A96003FACB8 /* default.mp3 in Resources */,
 				FF7ED95E1E377D0000A017D2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
