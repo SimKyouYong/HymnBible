@@ -322,9 +322,6 @@
     NSLog(@"ERROR : %@", error);
 }
 
-#pragma mark - 
-#pragma mark SpeechToTextModule Delegate
-
 #pragma mark -
 #pragma mark SpeechToTextModule Delegate
 

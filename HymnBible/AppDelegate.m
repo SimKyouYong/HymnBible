@@ -91,7 +91,7 @@
     NSLog(@"device token : %@", devToken);
     [defaults setObject:devToken forKey:TOKEN_KEY];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@?reg_id=%@&type=ios", @"", devToken];
+    NSString *urlString = [NSString stringWithFormat:@"%@?reg_id=%@&type=ios", MAIN_URL, devToken];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
     
