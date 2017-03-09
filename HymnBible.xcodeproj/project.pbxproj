@@ -532,6 +532,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: kim jinsu (XMEE852P3Q)";
 				DEVELOPMENT_TEAM = XMEE852P3Q;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HymnBible/Lib/SpeechToText",
@@ -553,6 +554,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: kim jinsu (XMEE852P3Q)";
 				DEVELOPMENT_TEAM = XMEE852P3Q;
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/HymnBible/Lib/SpeechToText",
