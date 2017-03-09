@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "SpeechToTextModule.h"
 #import "HTTPNetworkManager.h"
 
-@interface MainVC : UIViewController<SpeechToTextModuleDelegate, ASIHTTPRequestDelegate>{
+@interface MainVC : UIViewController<ASIHTTPRequestDelegate>{
     NSString *fURL;
     
     HTTPNetworkManager *requestDownload;
@@ -42,6 +41,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *addText2;
 - (IBAction)submitButton2:(id)sender;
 
-@property(nonatomic, strong)SpeechToTextModule *speechToTextObj;
+@property (weak, nonatomic) IBOutlet UIImageView *animationImageView;
 
 @end

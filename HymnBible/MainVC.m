@@ -13,9 +13,13 @@
 #import "MapVC.h"
 #import <sqlite3.h>
 #import "GlobalHeader.h"
+#import "UIImage+animatedGIF.h"
+#import "SpeechToTextModule.h"
 
-@interface MainVC ()
-
+@interface MainVC () <SpeechToTextModuleDelegate>  {
+    SpeechToTextModule *speechToTextModule;
+    BOOL isRecording;
+}
 @end
 
 @implementation MainVC
@@ -29,6 +33,7 @@
 @synthesize agreeTextButton;
 @synthesize addView;
 @synthesize addText2;
+@synthesize animationImageView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -41,9 +46,8 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [MainWebView loadRequest:request];
     
-    self.speechToTextObj = [[SpeechToTextModule alloc] initWithCustomDisplay:@"SineWaveViewController"];
-    [self.speechToTextObj setDelegate:self];
-    [self.view sendSubviewToBack:MainWebView];
+    speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
+    [speechToTextModule setDelegate:self];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
@@ -56,6 +60,10 @@
         [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [title length])];
         [agreeTextButton setAttributedTitle:title forState:UIControlStateNormal];
     }
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self stopRecording];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -203,7 +211,8 @@
         
         // SST
         if([fURL hasPrefix:@"js2ios://SearchSst?"]){
-            [self.speechToTextObj beginRecording];
+            alphaView.hidden = NO;
+            [self startRecording];
             
         // 성경(DB)
         }else if([fURL hasPrefix:@"js2ios://DBSQL?"]){
@@ -316,42 +325,58 @@
 #pragma mark - 
 #pragma mark SpeechToTextModule Delegate
 
-- (BOOL)didReceiveVoiceResponse:(NSData *)data
-{
-    NSString *responseString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+#pragma mark -
+#pragma mark SpeechToTextModule Delegate
+
+- (void)startRecording {
+    if (isRecording == NO) {
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"recording_animate" withExtension:@"gif"];
+        animationImageView.image = [UIImage animatedImageWithAnimatedGIFURL:url];
+        animationImageView.hidden = NO;
+        [speechToTextModule beginRecording];
+        isRecording = YES;
+    }
+}
+
+- (void)stopRecording {
+    if (isRecording) {
+        animationImageView.hidden = YES;
+        [speechToTextModule stopRecording:YES];
+        isRecording = NO;
+    }
+}
+
+- (BOOL)didReceiveVoiceResponse:(NSDictionary *)data {
     
-    NSLog(@"responseString: %@",responseString);
-    
-    NSArray *textArr = [responseString componentsSeparatedByString:@"transcript\":\""];
-    NSString *textStr = [textArr objectAtIndex:1];
-    NSArray *textArr2 = [textStr componentsSeparatedByString:@"\""];
-    
-    NSLog(@"%@", [textArr2 objectAtIndex:0]);
-    
-    NSString *sstStr = [NSString stringWithFormat:@"javascript:returnSearchSst('%@')", [textArr2 objectAtIndex:0]];
-    [MainWebView stringByEvaluatingJavaScriptFromString:sstStr];
+    NSLog(@"data %@",data);
+    [self stopRecording];
+    NSString *result = @"";
+    id tmp = data[@"transcript"];
+    if ([tmp isKindOfClass:[NSNumber class]] || [tmp rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound) {
+        
+        NSNumber *resultNumber = [NSNumber numberWithInteger:[tmp integerValue]];
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterSpellOutStyle];
+        result = [formatter stringFromNumber:resultNumber];
+    } else {
+        result = tmp;
+    }
+   
+    if (result == nil) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please pronouce the word or check your microphone" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:[NSString stringWithFormat:@"You pronouced \"%@\". You better try again", result] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        
+        NSString *sstStr = [NSString stringWithFormat:@"javascript:returnSearchSst('%@')", result];
+        [MainWebView stringByEvaluatingJavaScriptFromString:sstStr];
+        
+        alphaView.hidden = YES;
+    }
     
     return YES;
-}
-
-- (void)showSineWaveView:(SineWaveViewController *)view
-{
-    
-}
-
-- (void)dismissSineWaveView:(SineWaveViewController *)view cancelled:(BOOL)wasCancelled
-{
-    
-}
-
-- (void)showLoadingView
-{
-    NSLog(@"show loadingView");
-}
-
-- (void)requestFailedWithError:(NSError *)error
-{
-    NSLog(@"error: %@",error);
 }
 
 #pragma mark -
