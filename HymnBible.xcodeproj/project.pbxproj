@@ -10,6 +10,7 @@
 		292869551E6F8FC8004ADF76 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292869541E6F8FC8004ADF76 /* AudioToolbox.framework */; };
 		292869571E6F931A004ADF76 /* empty.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 292869561E6F931A004ADF76 /* empty.mp3 */; };
 		2928695B1E6F9D60004ADF76 /* pin.png in Resources */ = {isa = PBXBuildFile; fileRef = 2928695A1E6F9D60004ADF76 /* pin.png */; };
+		292869641E70E0BB004ADF76 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 292869631E70E0BB004ADF76 /* AssetsLibrary.framework */; };
 		6D623E141E405FF300B759C9 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E011E405FF300B759C9 /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6D623E151E405FF300B759C9 /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E041E405FF300B759C9 /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6D623E161E405FF300B759C9 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D623E061E405FF300B759C9 /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -56,6 +57,7 @@
 		292869541E6F8FC8004ADF76 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		292869561E6F931A004ADF76 /* empty.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = empty.mp3; sourceTree = "<group>"; };
 		2928695A1E6F9D60004ADF76 /* pin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pin.png; sourceTree = "<group>"; };
+		292869631E70E0BB004ADF76 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		6D623E001E405FF300B759C9 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		6D623E011E405FF300B759C9 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
 		6D623E021E405FF300B759C9 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				292869641E70E0BB004ADF76 /* AssetsLibrary.framework in Frameworks */,
 				292869551E6F8FC8004ADF76 /* AudioToolbox.framework in Frameworks */,
 				EA246E4E1E691FB800893023 /* UserNotifications.framework in Frameworks */,
 				FF8BE3501E5EE14000ECD7D3 /* MapKit.framework in Frameworks */,
@@ -182,6 +185,7 @@
 		6D623E201E40613100B759C9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				292869631E70E0BB004ADF76 /* AssetsLibrary.framework */,
 				292869541E6F8FC8004ADF76 /* AudioToolbox.framework */,
 				EA246E4D1E691FB800893023 /* UserNotifications.framework */,
 				FF8BE34F1E5EE14000ECD7D3 /* MapKit.framework */,
@@ -346,8 +350,7 @@
 				TargetAttributes = {
 					FF7ED94F1E377D0000A017D2 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = XMEE852P3Q;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -530,8 +533,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: kim jinsu (XMEE852P3Q)";
-				DEVELOPMENT_TEAM = XMEE852P3Q;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -542,8 +546,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hymnbible;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "43d2e3b0-68e8-47d1-b4cb-3a73285d4ba4";
-				PROVISIONING_PROFILE_SPECIFIER = HymnBible;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Debug;
 		};
@@ -552,8 +556,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: kim jinsu (XMEE852P3Q)";
-				DEVELOPMENT_TEAM = XMEE852P3Q;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -564,8 +569,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hymnbible;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "43d2e3b0-68e8-47d1-b4cb-3a73285d4ba4";
-				PROVISIONING_PROFILE_SPECIFIER = HymnBible;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 			};
 			name = Release;
 		};
