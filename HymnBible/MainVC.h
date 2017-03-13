@@ -42,5 +42,6 @@
 - (IBAction)submitButton2:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIImageView *animationImageView;
+@property (weak, nonatomic) IBOutlet UIView *loadingAlphaView;
 
 @end

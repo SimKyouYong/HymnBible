@@ -34,11 +34,12 @@
 @synthesize addView;
 @synthesize addText2;
 @synthesize animationImageView;
+@synthesize loadingAlphaView;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
     NSString *urlString = [NSString stringWithFormat:MAIN_URL];
@@ -344,13 +345,15 @@
 
 // 웹뷰가 컨텐츠를 읽기 시작한 후에 실행된다.
 - (void)webViewDidStartLoad:(UIWebView *)webView{
-    //NSLog(@"start");
+    NSLog(@"start");
     
     [self loadingInit];
 }
 
 // 웹뷰가 컨텐츠를 모두 읽은 후에 실행된다.
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSLog(@"finish");
+    
     [self loadingClose];
 }
 
@@ -524,12 +527,15 @@
     loadingLabel.text = [NSString stringWithFormat:@"로딩중..."];
     [loadingView addSubview:loadingLabel];
     
+    loadingAlphaView.hidden = NO;
+    
     [self.view addSubview:loadingView];
     [self.view bringSubviewToFront:loadingView];
     [activityView startAnimating];
 }
 
 - (void)loadingClose{
+    loadingAlphaView.hidden = YES;
     loadingView.hidden = YES;
     [activityView stopAnimating];
 }

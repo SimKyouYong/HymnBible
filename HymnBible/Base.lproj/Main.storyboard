@@ -57,6 +57,10 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                             </view>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Acs-mg-g2a">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </view>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Rp-yI-3k2">
                                 <rect key="frame" x="150" y="150" width="300" height="300"/>
                                 <subviews>
@@ -246,19 +250,24 @@
                             <constraint firstAttribute="trailing" secondItem="GXs-mc-z7R" secondAttribute="trailing" id="0ke-bZ-FUa"/>
                             <constraint firstItem="eDY-GP-e0R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="4XN-Jr-Igb"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eDY-GP-e0R" secondAttribute="bottom" id="4ox-24-MuP"/>
-                            <constraint firstItem="GXs-mc-z7R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="8dI-Jk-YUB"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Acs-mg-g2a" secondAttribute="bottom" id="4qo-9R-vRB"/>
                             <constraint firstItem="EKC-1M-eht" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AbU-3m-kqe"/>
                             <constraint firstItem="EKC-1M-eht" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="CAN-fQ-ICC"/>
                             <constraint firstItem="9Rp-yI-3k2" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IF1-9Q-gXS"/>
                             <constraint firstAttribute="trailing" secondItem="eDY-GP-e0R" secondAttribute="trailing" id="Ohd-E1-kI8"/>
+                            <constraint firstItem="eDY-GP-e0R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Oi2-Bg-SEv"/>
                             <constraint firstItem="GXs-mc-z7R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Puu-Hk-FRn"/>
+                            <constraint firstItem="Acs-mg-g2a" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="QE8-Eg-60v"/>
+                            <constraint firstAttribute="trailing" secondItem="Acs-mg-g2a" secondAttribute="trailing" id="Urc-0K-Nei"/>
+                            <constraint firstItem="Acs-mg-g2a" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="dXz-HB-5Hd"/>
                             <constraint firstItem="jLK-b0-2aN" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lP6-tE-r4I"/>
+                            <constraint firstItem="GXs-mc-z7R" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="oNf-ft-ieE"/>
                             <constraint firstItem="9Rp-yI-3k2" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="sEz-IX-QcN"/>
                             <constraint firstItem="jLK-b0-2aN" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="xic-rO-rxP"/>
-                            <constraint firstItem="eDY-GP-e0R" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="z4t-fH-RZj"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="GXs-mc-z7R" secondAttribute="bottom" id="ztY-az-tOZ"/>
                         </constraints>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <navigationItem key="navigationItem" id="MC7-Wg-Mgu"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -273,6 +282,7 @@
                         <outlet property="alphaView" destination="GXs-mc-z7R" id="E1K-VM-3JO"/>
                         <outlet property="animationImageView" destination="EKC-1M-eht" id="nxb-dA-K9S"/>
                         <outlet property="firstView" destination="9Rp-yI-3k2" id="OZe-0Z-TAS"/>
+                        <outlet property="loadingAlphaView" destination="Acs-mg-g2a" id="Zxi-FE-8Ci"/>
                         <outlet property="phoneText" destination="eIi-1F-t9b" id="Uma-4S-59b"/>
                         <segue destination="xWr-wc-ezs" kind="push" identifier="music" id="uKQ-9t-r6K"/>
                         <segue destination="KuZ-oV-hmd" kind="push" identifier="map" id="1fj-gR-O8T"/>
