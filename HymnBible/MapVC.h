@@ -40,12 +40,19 @@
     
     NSMutableArray *arrayLatitude;
     NSMutableArray *arrayLongitude;
+    
+    UIActivityIndicatorView *activityView;
+    UIView *loadingView;
+    UILabel *loadingLabel;
+    
+    NSDictionary *nextDic;
 }
 
 @property (weak, nonatomic) IBOutlet UIView *mkView;
 @property (weak, nonatomic) IBOutlet UITableView *mapTableView;
 
 @property (weak, nonatomic) IBOutlet UITextField *addressText;
+@property (weak, nonatomic) IBOutlet UILabel *searchResultText;
 
 - (IBAction)backButton:(id)sender;
 - (IBAction)searchButton:(id)sender;

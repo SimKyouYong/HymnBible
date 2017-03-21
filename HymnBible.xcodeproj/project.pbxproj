@@ -30,6 +30,8 @@
 		EA246E4B1E690B9800893023 /* JPSThumbnailAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = EA246E471E690B9800893023 /* JPSThumbnailAnnotation.m */; };
 		EA246E4C1E690B9800893023 /* JPSThumbnailAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = EA246E491E690B9800893023 /* JPSThumbnailAnnotationView.m */; };
 		EA246E4E1E691FB800893023 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA246E4D1E691FB800893023 /* UserNotifications.framework */; };
+		FF6EE28A1E81631100924256 /* MapDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = FF6EE2891E81631100924256 /* MapDetailVC.m */; };
+		FF6EE28C1E81644000924256 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = FF6EE28B1E81644000924256 /* back.png */; };
 		FF7ED9551E377D0000A017D2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9541E377D0000A017D2 /* main.m */; };
 		FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF7ED9571E377D0000A017D2 /* AppDelegate.m */; };
 		FF7ED95E1E377D0000A017D2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF7ED95C1E377D0000A017D2 /* Main.storyboard */; };
@@ -94,6 +96,9 @@
 		EA246E481E690B9800893023 /* JPSThumbnailAnnotationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JPSThumbnailAnnotationView.h; sourceTree = "<group>"; };
 		EA246E491E690B9800893023 /* JPSThumbnailAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JPSThumbnailAnnotationView.m; sourceTree = "<group>"; };
 		EA246E4D1E691FB800893023 /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		FF6EE2881E81631100924256 /* MapDetailVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapDetailVC.h; sourceTree = "<group>"; };
+		FF6EE2891E81631100924256 /* MapDetailVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapDetailVC.m; sourceTree = "<group>"; };
+		FF6EE28B1E81644000924256 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back.png; sourceTree = "<group>"; };
 		FF7ED9501E377D0000A017D2 /* HymnBible.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HymnBible.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF7ED9541E377D0000A017D2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		FF7ED9561E377D0000A017D2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -236,6 +241,8 @@
 				FFFA6EF91E51DE21001D5185 /* MusicVC.m */,
 				FF8BE34A1E5EE03E00ECD7D3 /* MapVC.h */,
 				FF8BE34B1E5EE03E00ECD7D3 /* MapVC.m */,
+				FF6EE2881E81631100924256 /* MapDetailVC.h */,
+				FF6EE2891E81631100924256 /* MapDetailVC.m */,
 				FF7ED95C1E377D0000A017D2 /* Main.storyboard */,
 				FF93753E1E66E86800462818 /* Resources */,
 				FF7ED95F1E377D0000A017D2 /* Assets.xcassets */,
@@ -292,6 +299,7 @@
 		FF93753E1E66E86800462818 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FF6EE28B1E81644000924256 /* back.png */,
 				FFACC2DB1E717A96003FACB8 /* default.mp3 */,
 				2928695A1E6F9D60004ADF76 /* pin.png */,
 				292869561E6F931A004ADF76 /* empty.mp3 */,
@@ -388,6 +396,7 @@
 				292869571E6F931A004ADF76 /* empty.mp3 in Resources */,
 				FF9375461E66E86800462818 /* search02.png in Resources */,
 				FFC4CB3B1E40B9F8002078AF /* bible_kr.db in Resources */,
+				FF6EE28C1E81644000924256 /* back.png in Resources */,
 				FF9375451E66E86800462818 /* search01.png in Resources */,
 				FFACC2DC1E717A96003FACB8 /* default.mp3 in Resources */,
 				FF7ED95E1E377D0000A017D2 /* Main.storyboard in Resources */,
@@ -410,6 +419,7 @@
 				6D623E1F1E40610600B759C9 /* ReachabilityWifi.m in Sources */,
 				EA246E4A1E690B9800893023 /* JPSThumbnail.m in Sources */,
 				FF7ED9581E377D0000A017D2 /* AppDelegate.m in Sources */,
+				FF6EE28A1E81631100924256 /* MapDetailVC.m in Sources */,
 				EA246E4C1E690B9800893023 /* JPSThumbnailAnnotationView.m in Sources */,
 				FF8BE34C1E5EE03E00ECD7D3 /* MapVC.m in Sources */,
 				6D623E141E405FF300B759C9 /* ASIAuthenticationDialog.m in Sources */,

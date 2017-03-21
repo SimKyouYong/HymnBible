@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet UIWebView *webview;
 
-@property (nonatomic) NSString  *musicURL;
+@property (nonatomic) NSString *musicURL;
 
 - (IBAction)closeButton:(id)sender;
 
