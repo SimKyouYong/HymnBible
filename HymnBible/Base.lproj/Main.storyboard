@@ -516,6 +516,18 @@
                                     <outlet property="delegate" destination="KuZ-oV-hmd" id="tAg-kY-jHb"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" alpha="0.5" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ous-5j-dxT">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="csD-1j-saj">
+                                <rect key="frame" x="190" y="190" width="220" height="220"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="AUd-Kg-d0m"/>
+                                    <constraint firstAttribute="height" constant="220" id="ktB-VS-jQh"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -525,10 +537,12 @@
                             <constraint firstItem="s74-Yg-qha" firstAttribute="top" secondItem="omE-Hc-4Fr" secondAttribute="bottom" id="8Si-1Q-48u"/>
                             <constraint firstItem="PaC-kt-sm4" firstAttribute="top" secondItem="7sg-T5-3sz" secondAttribute="bottom" id="8a2-Gq-fB1"/>
                             <constraint firstItem="7Rq-qo-PxB" firstAttribute="top" secondItem="DaY-NN-RbZ" secondAttribute="bottom" id="EH4-jx-eFd"/>
+                            <constraint firstItem="csD-1j-saj" firstAttribute="centerX" secondItem="xCY-8h-Vgu" secondAttribute="centerX" id="Hug-tB-hxi"/>
                             <constraint firstItem="omE-Hc-4Fr" firstAttribute="leading" secondItem="xCY-8h-Vgu" secondAttribute="leading" id="LhD-cb-Yvo"/>
                             <constraint firstItem="PaC-kt-sm4" firstAttribute="leading" secondItem="xCY-8h-Vgu" secondAttribute="leading" id="N7V-fZ-TXC"/>
                             <constraint firstItem="Zyc-o2-OhZ" firstAttribute="top" secondItem="PaC-kt-sm4" secondAttribute="bottom" constant="20" id="OfY-se-94a"/>
                             <constraint firstItem="DaY-NN-RbZ" firstAttribute="trailing" secondItem="xCY-8h-Vgu" secondAttribute="trailingMargin" id="RfD-Ac-S95"/>
+                            <constraint firstItem="csD-1j-saj" firstAttribute="centerY" secondItem="xCY-8h-Vgu" secondAttribute="centerY" id="So4-Se-IDl"/>
                             <constraint firstItem="Zyc-o2-OhZ" firstAttribute="trailing" secondItem="xCY-8h-Vgu" secondAttribute="trailingMargin" id="VSb-35-1EC"/>
                             <constraint firstItem="omE-Hc-4Fr" firstAttribute="top" secondItem="7sg-T5-3sz" secondAttribute="bottom" id="a5C-ql-c2L"/>
                             <constraint firstAttribute="trailing" secondItem="PaC-kt-sm4" secondAttribute="trailing" id="eJ5-pS-BJJ"/>
@@ -544,6 +558,8 @@
                     <size key="freeformSize" width="600" height="600"/>
                     <connections>
                         <outlet property="addressText" destination="nFd-3e-HFS" id="VBG-yK-wZa"/>
+                        <outlet property="alphaView" destination="Ous-5j-dxT" id="RlM-m4-rJG"/>
+                        <outlet property="animationView" destination="csD-1j-saj" id="Zg8-yy-BQ6"/>
                         <outlet property="mapTableView" destination="7Rq-qo-PxB" id="Omc-ZD-R86"/>
                         <outlet property="mkView" destination="Zyc-o2-OhZ" id="eDo-zC-yoD"/>
                         <outlet property="searchResultText" destination="DaY-NN-RbZ" id="sNN-E8-Kiw"/>

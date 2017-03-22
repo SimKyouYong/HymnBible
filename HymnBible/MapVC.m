@@ -10,13 +10,19 @@
 #import "GlobalHeader.h"
 #import "JPSThumbnailAnnotation.h"
 #import "MapDetailVC.h"
+#import "SpeechToTextModule.h"
+#import "UIImage+animatedGIF.h"
 
-@interface MapVC ()
-
+@interface MapVC ()<SpeechToTextModuleDelegate>  {
+    SpeechToTextModule *speechToTextModule;
+    BOOL isRecording;
+}
 @end
 
 @implementation MapVC
 
+@synthesize alphaView;
+@synthesize animationView;
 @synthesize mkView;
 @synthesize addressText;
 @synthesize mapTableView;
@@ -24,6 +30,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
+    [speechToTextModule setDelegate:self];
     
     searchResultText.text = @"";
     
@@ -70,6 +79,10 @@
     [mkMapView setRegion:region animated:YES];
     [mkMapView setCenterCoordinate:region.center animated:YES];
     [mkMapView regionThatFits:region];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self stopRecording];
 }
 
 - (MKAnnotationView *)mapView:(MKMapView *)aMapView viewForAnnotation:(id <MKAnnotation>)annotation {
@@ -239,7 +252,7 @@
 }
 
 - (IBAction)sstButton:(id)sender {
-    
+    [self startRecording];
 }
 
 #pragma mark -
@@ -301,6 +314,63 @@
     nextDic = [churchArr objectAtIndex:sender.tag];
     
     [self performSegueWithIdentifier:@"detail" sender:nil];
+}
+
+#pragma mark -
+#pragma mark SpeechToTextModule Delegate
+
+- (void)startRecording {
+    if (isRecording == NO) {
+        NSURL *url = [[NSBundle mainBundle] URLForResource:@"recording_animate" withExtension:@"gif"];
+        animationView.image = [UIImage animatedImageWithAnimatedGIFURL:url];
+        animationView.hidden = NO;
+        [speechToTextModule beginRecording];
+        isRecording = YES;
+    }
+}
+
+- (void)stopRecording {
+    if (isRecording) {
+        animationView.hidden = YES;
+        [speechToTextModule stopRecording:YES];
+        isRecording = NO;
+    }
+}
+
+- (BOOL)didReceiveVoiceResponse:(NSDictionary *)data {
+    
+    NSLog(@"data %@",data);
+    [self stopRecording];
+    NSString *result = @"";
+    id tmp = data[@"transcript"];
+    if ([tmp isKindOfClass:[NSNumber class]] || [tmp rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound) {
+        
+        NSNumber *resultNumber = [NSNumber numberWithInteger:[tmp integerValue]];
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc] init];
+        [formatter setNumberStyle:NSNumberFormatterSpellOutStyle];
+        result = [formatter stringFromNumber:resultNumber];
+    } else {
+        result = tmp;
+    }
+    
+    if (result == nil) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please pronouce the word or check your microphone" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+    }
+    else {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:[NSString stringWithFormat:@"You pronouced \"%@\". You better try again", result] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+        [alert show];
+        
+        addressText.text = result;
+        
+        [self loadingInit];
+        
+        [self churchJsonParsing];
+        
+        alphaView.hidden = YES;
+    }
+    
+    return YES;
 }
 
 #pragma mark -

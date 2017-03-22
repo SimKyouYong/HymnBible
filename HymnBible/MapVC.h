@@ -48,6 +48,9 @@
     NSDictionary *nextDic;
 }
 
+@property (weak, nonatomic) IBOutlet UIView *alphaView;
+@property (weak, nonatomic) IBOutlet UIImageView *animationView;
+
 @property (weak, nonatomic) IBOutlet UIView *mkView;
 @property (weak, nonatomic) IBOutlet UITableView *mapTableView;
 
