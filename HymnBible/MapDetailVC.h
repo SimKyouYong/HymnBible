@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MapDetailVC : UIViewController
+@interface MapDetailVC : UIViewController{
+    NSInteger imageCount;
+}
 
 @property (nonatomic) NSDictionary *mapDetailDic;
 
@@ -26,5 +28,12 @@
 - (IBAction)backButton:(id)sender;
 - (IBAction)infoButton:(id)sender;
 - (IBAction)closeButton:(id)sender;
+
+@property (weak, nonatomic) IBOutlet UIView *bodyView;
+@property (weak, nonatomic) IBOutlet UIImageView *churchImage;
+@property (weak, nonatomic) IBOutlet UIButton *leftImageButton;
+- (IBAction)leftImageButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *rightImageButton;
+- (IBAction)rightImageButton:(id)sender;
 
 @end

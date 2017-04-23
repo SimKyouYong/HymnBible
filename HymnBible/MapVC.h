@@ -12,7 +12,6 @@
 #import "Pin.h"
 
 @interface MapVC : UIViewController<CLLocationManagerDelegate, MKMapViewDelegate>{
-    CLLocationManager *locationManager;
     CLLocation *startPoint;
     
     NSMutableArray *distance;
@@ -50,6 +49,8 @@
 
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
 @property (weak, nonatomic) IBOutlet UIImageView *animationView;
+@property (weak, nonatomic) IBOutlet UILabel *sttText;
+- (IBAction)closeButton:(id)sender;
 
 @property (weak, nonatomic) IBOutlet UIView *mkView;
 @property (weak, nonatomic) IBOutlet UITableView *mapTableView;

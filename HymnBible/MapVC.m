@@ -23,6 +23,7 @@
 
 @synthesize alphaView;
 @synthesize animationView;
+@synthesize sttText;
 @synthesize mkView;
 @synthesize addressText;
 @synthesize mapTableView;
@@ -42,43 +43,14 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    locationManager = [[CLLocationManager alloc] init];
-    locationManager.delegate = self;
-    locationManager.desiredAccuracy = kCLLocationAccuracyBest;
-    locationManager.distanceFilter = kCLDistanceFilterNone;
-    [locationManager startUpdatingLocation];
-    
     // Map View
     mkMapView = [[MKMapView alloc] initWithFrame:mkView.bounds];
     mkMapView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     mkMapView.delegate = self;
+    mkMapView.showsUserLocation = YES;
+    [mkMapView setMapType:MKMapTypeStandard];
     [mkView addSubview:mkMapView];
     
-    /*
-    rLatitude = 37.476390;
-    rLongitude = 126.885635;
-    
-    arrayLatitude = [[NSMutableArray alloc] init];
-    arrayLongitude = [[NSMutableArray alloc] init];
-    
-    NSNumber *temLatitude = [NSNumber numberWithFloat:rLatitude];
-    NSNumber *temrLongitude = [NSNumber numberWithFloat:rLongitude];
-    [arrayLatitude addObject:temLatitude];
-    [arrayLongitude addObject:temrLongitude];
-    */
-    
-    MKCoordinateRegion region;
-    MKCoordinateSpan span;
-    
-    span.latitudeDelta = 0.002;
-    span.longitudeDelta = 0.002;
-    
-    region.center = CLLocationCoordinate2DMake(locationManager.location.coordinate.latitude, locationManager.location.coordinate.longitude);
-    region.span = span;
-    
-    [mkMapView setRegion:region animated:YES];
-    [mkMapView setCenterCoordinate:region.center animated:YES];
-    [mkMapView regionThatFits:region];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -94,11 +66,29 @@
             annotationView = [[MKAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:placeMarkIdentifier];
             annotationView.image = [UIImage imageNamed:@"pin"];//[annotation subtitle]];
             annotationView.canShowCallout = YES;
-            //annotationView.rightCalloutAccessoryView = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
-            UIImageView *myImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"search01"]];
-            myImageView.frame = CGRectMake(0,0,31,31); // Change the size of the image to fit the callout
+            annotationView.tag = aMapView.tag;
+            NSLog(@"%@", annotation.title);
             
-            // Change this to rightCallout... to move the image to the right side
+            NSString *imgName = @"";
+            NSData *imageData;
+            for(int i = 0; i < [churchArr count]; i++){
+                NSDictionary *dic = [churchArr objectAtIndex:i];
+                if([annotation.title isEqualToString:[dic objectForKey:@"church_name"]]){
+                    imgName = [dic objectForKey:@"church_img"];
+                    break;
+                }
+            }
+            
+            if([imgName isEqualToString:@""]){
+                imageData = nil;
+            }else{
+                NSURL *imageURL = [NSURL URLWithString:imgName];
+                imageData = [NSData dataWithContentsOfURL:imageURL];
+            }
+            
+            UIImageView *myImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:imageData]];
+            myImageView.frame = CGRectMake(0,0,31,31);
+
             annotationView.leftCalloutAccessoryView = myImageView;
             myImageView = nil;
         }
@@ -142,12 +132,9 @@
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Response:%@ %@\n", response, error);
-        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+        //NSLog(@"Response:%@ %@\n", response, error);
         NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         churchArr = [NSJSONSerialization JSONObjectWithData:[returnStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:NULL];
-        
-        NSLog(@"%@", churchArr);
         
         [self mapLoad];
         [mapTableView reloadData];
@@ -169,6 +156,18 @@
 }
 
 - (void)mapLoad{
+    for (id<MKAnnotation> annotation in mkMapView.annotations) {
+        [mkMapView removeAnnotation:annotation];
+    }
+    
+    // Map View
+    mkMapView = [[MKMapView alloc] initWithFrame:mkView.bounds];
+    mkMapView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+    mkMapView.delegate = self;
+    mkMapView.showsUserLocation = YES;
+    [mkMapView setMapType:MKMapTypeStandard];
+    [mkView addSubview:mkMapView];
+    
     for (int i = 0; i < [churchArr count]; i++) {
         NSDictionary *dic = [churchArr objectAtIndex:i];
         Pin *ann = [[Pin alloc] init];
@@ -180,19 +179,24 @@
         ann.coordinate = center;
         [mkMapView addAnnotation:ann];
         
-        if(i == 0){
-            MKCoordinateRegion region;
-            MKCoordinateSpan span;
-            
-            span.latitudeDelta = 0.002;
-            span.longitudeDelta = 0.002;
-            
+        if([churchArr count] == 1){
+            MKCoordinateRegion region = mkMapView.region;
+
             region.center = CLLocationCoordinate2DMake([[dic objectForKey:@"latitude"] floatValue], [[dic objectForKey:@"hardness"] floatValue]);
-            region.span = span;
             
-            [mkMapView setRegion:region animated:YES];
-            [mkMapView setCenterCoordinate:region.center animated:YES];
-            [mkMapView regionThatFits:region];
+            region.span.longitudeDelta /= 10000.0;
+            region.span.latitudeDelta /= 10000.0;
+            [mkMapView setRegion:region animated:NO];
+        }else{
+            if(i == 0){
+                MKCoordinateRegion region = mkMapView.region;
+                
+                region.center = CLLocationCoordinate2DMake(35.95, 128.25);
+                
+                region.span.longitudeDelta /= 20.0;
+                region.span.latitudeDelta /= 20.0;
+                [mkMapView setRegion:region animated:NO];
+            }
         }
     }
 }
@@ -253,6 +257,11 @@
 
 - (IBAction)sstButton:(id)sender {
     [self startRecording];
+}
+
+- (IBAction)closeButton:(id)sender {
+    alphaView.hidden = YES;
+    [self stopRecording];
 }
 
 #pragma mark -
@@ -354,13 +363,9 @@
     }
     
     if (result == nil) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please pronouce the word or check your microphone" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        alphaView.hidden = YES;
     }
     else {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:[NSString stringWithFormat:@"You pronouced \"%@\". You better try again", result] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-        
         addressText.text = result;
         
         [self loadingInit];
@@ -415,6 +420,15 @@
         MapDetailVC *vc = [segue destinationViewController];
         vc.mapDetailDic = nextDic;
     }
+}
+
+#pragma mark -
+#pragma mark TextField Delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [self searchButton:nil];
+    [textField resignFirstResponder];
+    return YES;
 }
 
 #pragma mark -

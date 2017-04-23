@@ -13,6 +13,7 @@
 
 // NSUserDefault
 #define TOKEN_KEY           @"token_key"
-#define POPUP_CHECK         @"popup_check"
+#define ADD_PEOPLE_MAIN     @"add_people_main"
+#define ADD_PEOPLE_SETTING  @"add_people_setting"
 #define MY_ID               @"my_id"
 #define PUSH_SETTING        @"push_setting"

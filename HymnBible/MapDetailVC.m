@@ -7,6 +7,7 @@
 //
 
 #import "MapDetailVC.h"
+#import "GlobalHeader.h"
 
 @interface MapDetailVC ()
 
@@ -25,6 +26,10 @@
 @synthesize faxText;
 @synthesize homepageText;
 @synthesize introText;
+@synthesize churchImage;
+@synthesize bodyView;
+@synthesize leftImageButton;
+@synthesize rightImageButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -44,11 +49,30 @@
     faxText.text = [mapDetailDic objectForKey:@"church_fax"];
     homepageText.text = [mapDetailDic objectForKey:@"church_homepage"];
     introText.text = [mapDetailDic objectForKey:@"church_body"];
+    
+    if([[mapDetailDic objectForKey:@"church_img"] isEqualToString:@""]){
+        
+    }else{
+        imageCount = 1;
+        NSURL *imageURL = [NSURL URLWithString:[mapDetailDic objectForKey:@"church_img"]];
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        churchImage.image = [UIImage imageWithData:imageData];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
     
+    if([[mapDetailDic objectForKey:@"church_img"] isEqualToString:@""]){
+        churchImage.hidden = YES;
+        leftImageButton.hidden = YES;
+        rightImageButton.hidden = YES;
+        bodyView.frame = CGRectMake(10, 80, self.view.frame.size.width - 20, 280);
+    }
 }
 
 - (IBAction)backButton:(id)sender {
@@ -60,6 +84,36 @@
 
 - (IBAction)closeButton:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)leftImageButton:(id)sender {
+    imageCount--;
+    if(imageCount == 0){
+        imageCount = 1;
+    }
+    
+    NSString *churchName = [NSString stringWithFormat:@"church_img%ld", imageCount];
+    
+    if(imageCount == 1){
+        churchName = [NSString stringWithFormat:@"church_img"];
+    }
+    
+    NSURL *imageURL = [NSURL URLWithString:[mapDetailDic objectForKey:churchName]];
+    NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+    churchImage.image = [UIImage imageWithData:imageData];
+}
+
+- (IBAction)rightImageButton:(id)sender {
+    imageCount++;
+    NSString *churchName = [NSString stringWithFormat:@"church_img%ld", imageCount];
+    NSLog(@"%@", churchName);
+    if([[mapDetailDic objectForKey:churchName] isEqualToString:@""]){
+        imageCount--;
+    }else{
+        NSURL *imageURL = [NSURL URLWithString:[mapDetailDic objectForKey:churchName]];
+        NSData *imageData = [NSData dataWithContentsOfURL:imageURL];
+        churchImage.image = [UIImage imageWithData:imageData];
+    }
 }
 
 @end

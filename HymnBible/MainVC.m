@@ -15,6 +15,7 @@
 #import "GlobalHeader.h"
 #import "UIImage+animatedGIF.h"
 #import "SpeechToTextModule.h"
+#import "KeychainItemWrapper.h"
 
 @interface MainVC () <SpeechToTextModuleDelegate>  {
     SpeechToTextModule *speechToTextModule;
@@ -26,15 +27,12 @@
 
 @synthesize MainWebView;
 @synthesize alphaView;
-@synthesize firstView;
-@synthesize phoneText;
-@synthesize addText;
-@synthesize agreeCheckButton;
-@synthesize agreeTextButton;
 @synthesize addView;
 @synthesize addText2;
 @synthesize animationImageView;
 @synthesize loadingAlphaView;
+@synthesize sttText;
+@synthesize closeButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -42,25 +40,13 @@
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    NSString *urlString = [NSString stringWithFormat:MAIN_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getUUID]];
     NSURL *url = [NSURL URLWithString:urlString];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [MainWebView loadRequest:request];
     
     speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
     [speechToTextModule setDelegate:self];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    if([defaults stringForKey:POPUP_CHECK].length == 0){
-        alphaView.hidden = NO;
-        firstView.hidden = NO;
-        
-        NSMutableAttributedString *title = [[NSMutableAttributedString alloc] initWithString:@"개인정보이용동의"];
-        [title addAttribute:NSForegroundColorAttributeName value:[UIColor blackColor] range:NSMakeRange(0, [title length])];
-        [title addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInteger:NSUnderlineStyleSingle] range:NSMakeRange(0, [title length])];
-        [agreeTextButton setAttributedTitle:title forState:UIControlStateNormal];
-    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -83,122 +69,22 @@
 #pragma mark -
 #pragma mark Button Action
 
-- (IBAction)submitButton:(id)sender {
-    if(phoneText.text.length == 0){
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-        [alert show];
-        
-        return;
-    }
-    if(agreeCheckButton.selected == 0){
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"개인정보이용 동의에 체크해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-        [alert show];
-        
-        return;
-    }
-    
-    [self loadingInit];
-    
-    if(phoneText.text.length == 10 || phoneText.text.length == 11){
-        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, phoneText.text];
-        NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-        NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
-        NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-        [urlRequest setHTTPMethod:@"GET"];
-        NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            //NSLog(@"Response:%@ %@\n", response, error);
-            NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-            if (statusCode == 200) {
-                if(addText.text.length == 0){
-                    alphaView.hidden = YES;
-                    firstView.hidden = YES;
-                    
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults synchronize];
-                    [defaults setObject:@"YES" forKey:POPUP_CHECK];
-                    [defaults setObject:phoneText.text forKey:MY_ID];
-                }else{
-                    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                    [defaults synchronize];
-                    [defaults setObject:phoneText.text forKey:MY_ID];
-                }
-                
-                [self httpInit1];
-            }
-        }];
-        [dataTask resume];
-    }else{
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"휴대폰 번호를 잘못 입력하였습니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-        [alert show];
-        
-        [self loadingClose];
-    }
-}
-
-- (IBAction)agreeCheckButton:(id)sender {
-    UIButton *button = (UIButton *) sender;
-    button.selected = !button.selected;
-    
-    if(button.selected == 1){
-        [agreeCheckButton setImage:[UIImage imageNamed:@"check_on"] forState:UIControlStateNormal];
-    }else{
-        [agreeCheckButton setImage:[UIImage imageNamed:@"check_off"] forState:UIControlStateNormal];
-    }
-}
-
-- (IBAction)agreeTextButton:(id)sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://www.naver.com"]];
-}
-
-// 최초 폰번호 겟으로 통신 후 토큰키 포스트로
-- (void)httpInit1{
-    [phoneText resignFirstResponder];
-    [addText resignFirstResponder];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@", DB_ADD_URL];
-    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"phone=%@&reg_id=%@&type=ios", phoneText.text, [defaults stringForKey:TOKEN_KEY]];
-    
-    [urlRequest setHTTPMethod:@"POST"];
-    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        //NSLog(@"Response:%@ %@\n", response, error);
-        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-        if (statusCode == 200) {
-            if(addText.text.length == 0){
-                alphaView.hidden = YES;
-                firstView.hidden = YES;
-                [self loadingClose];
-            }else{
-                [self httpInit2];
-            }
-        }
-    }];
-    [dataTask resume];
-}
-
 // 추천인 있으면 통신
-- (void)httpInit2{
+- (void)httpInit{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@json/recommender-proc.do", MAIN_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@/recommender-proc.do", MAIN_URL];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [defaults stringForKey:MY_ID], addText.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getUUID], addText2.text];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        //NSLog(@"Response:%@ %@\n", response, error);
+        NSLog(@"Response:%@ %@\n", response, error);
         NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
         if (statusCode == 200) {
             
@@ -208,7 +94,7 @@
         }
         
         alphaView.hidden = YES;
-        firstView.hidden = YES;
+        addView.hidden = YES;
         [self loadingClose];
     }];
     [dataTask resume];
@@ -216,7 +102,35 @@
 
 // 추천인 팝업뷰
 - (IBAction)submitButton2:(id)sender {
-    [self httpInit2];
+    [self httpInit];
+    
+    [addText2 resignFirstResponder];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    if(addNum == 1){
+        [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
+    }else{
+        [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
+    }
+}
+
+- (IBAction)cancelButton:(id)sender {
+    alphaView.hidden = YES;
+    addView.hidden = YES;
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    if(addNum == 1){
+        [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
+    }else{
+        [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
+    }
+}
+
+- (IBAction)closeButton:(id)sender {
+    alphaView.hidden = YES;
+    [self stopRecording];
 }
 
 #pragma mark -
@@ -306,7 +220,7 @@
         }else if([fURL hasPrefix:@"js2ios://ChurchSearch?"]){
             [self performSegueWithIdentifier:@"map" sender:nil];
         
-            // 설정(푸시)
+        // 설정(푸시)
         }else if([fURL hasPrefix:@"js2ios://GetPush?"]){
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults synchronize];
@@ -335,9 +249,49 @@
             }
             
             [MainWebView stringByEvaluatingJavaScriptFromString:pushValue];
+        
+        // 추천인 입력(메인)
+        }else if([fURL hasPrefix:@"js2ios://FirstInputAlert?"]){
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            if([defaults stringForKey:ADD_PEOPLE_MAIN].length == 0){
+                alphaView.hidden = NO;
+                addView.hidden = NO;
+                addNum = 1;
+            }
+        
+        // 추천인 입력(메인)
+        }else if([fURL hasPrefix:@"js2ios://InputAlert?"]){
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            if([defaults stringForKey:ADD_PEOPLE_SETTING].length == 0){
+                alphaView.hidden = NO;
+                addView.hidden = NO;
+                addNum = 2;
+            }
         }
         
         return NO;
+    }
+    
+    // 메인화면 sst text 수정
+    if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/index.do"]){
+        sttText.text = @"문단을 말해주세요.";
+    }
+    
+    // 찬송가 클릭시 sst text 수정
+    if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/hymn/hymn_list.do"]){
+        sttText.text = @"숫자,제목,가사를 말해주세요.";
+    }
+    
+    // 성경 클릭시 sst text 수정
+    if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/bible/bible_category.do"]){
+        sttText.text = @"문단을 말해주세요.";
+    }
+    
+    // 경조사 클릭시 sst text 수정
+    if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/event/list.do"]){
+        sttText.text = @"이름을 말해주세요.";
     }
     
     return YES;
@@ -371,6 +325,8 @@
         animationImageView.image = [UIImage animatedImageWithAnimatedGIFURL:url];
         animationImageView.hidden = NO;
         [speechToTextModule beginRecording];
+        sttText.hidden = NO;
+        closeButton.hidden = NO;
         isRecording = YES;
     }
 }
@@ -379,6 +335,8 @@
     if (isRecording) {
         animationImageView.hidden = YES;
         [speechToTextModule stopRecording:YES];
+        sttText.hidden = YES;
+        closeButton.hidden = YES;
         isRecording = NO;
     }
 }
@@ -400,13 +358,9 @@
     }
    
     if (result == nil) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please pronouce the word or check your microphone" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
+        alphaView.hidden = YES;
     }
     else {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Wrong" message:[NSString stringWithFormat:@"You pronouced \"%@\". You better try again", result] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-        
         NSString *sstStr = [NSString stringWithFormat:@"javascript:returnSearchSst('%@')", result];
         [MainWebView stringByEvaluatingJavaScriptFromString:sstStr];
         
@@ -538,6 +492,28 @@
     loadingAlphaView.hidden = YES;
     loadingView.hidden = YES;
     [activityView stopAnimating];
+}
+
+#pragma mark -
+#pragma mark UUID
+
+- (NSString*) getUUID{
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:@"UUID" accessGroup:nil];
+    
+    NSString *uuid = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    if( uuid == nil || uuid.length == 0){
+        CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+        CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
+        CFRelease(uuidRef);
+        
+        uuid = [NSString stringWithString:(__bridge NSString *) uuidStringRef];
+        CFRelease(uuidStringRef);
+        
+        [wrapper setObject:uuid forKey:(__bridge id)(kSecAttrAccount)];
+    }
+    
+    return uuid;
 }
 
 @end
