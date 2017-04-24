@@ -44,6 +44,7 @@
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
     // Map View
+    mkView.frame = CGRectMake(0, 70, self.view.frame.size.width, self.view.frame.size.height - 70);
     mkMapView = [[MKMapView alloc] initWithFrame:mkView.bounds];
     mkMapView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     mkMapView.delegate = self;
@@ -67,7 +68,6 @@
             annotationView.image = [UIImage imageNamed:@"pin"];//[annotation subtitle]];
             annotationView.canShowCallout = YES;
             annotationView.tag = aMapView.tag;
-            NSLog(@"%@", annotation.title);
             
             NSString *imgName = @"";
             NSData *imageData;
@@ -141,14 +141,8 @@
         
         searchResultText.text = [NSString stringWithFormat:@"%@ 검색 결과는 총 %ld 건 입니다.", addressText.text, [churchArr count]];
         
-        /*
-        if (statusCode == 200) {
-            
-        }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"잠시 후 다시 시도해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-            [alert show];
-        }
-         */
+        mapTableView.hidden = NO;
+        mkView.frame = CGRectMake(0, 70, self.view.frame.size.width, self.view.frame.size.height - 170);
         
         [self loadingClose];
     }];
@@ -193,8 +187,8 @@
                 
                 region.center = CLLocationCoordinate2DMake(35.95, 128.25);
                 
-                region.span.longitudeDelta /= 20.0;
-                region.span.latitudeDelta /= 20.0;
+                region.span.longitudeDelta /= 35.0;
+                region.span.latitudeDelta /= 35.0;
                 [mkMapView setRegion:region animated:NO];
             }
         }
