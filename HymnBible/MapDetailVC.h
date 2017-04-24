@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface MapDetailVC : UIViewController{
+@interface MapDetailVC : UIViewController<MFMailComposeViewControllerDelegate>{
     NSInteger imageCount;
 }
 
@@ -35,5 +36,8 @@
 - (IBAction)leftImageButton:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *rightImageButton;
 - (IBAction)rightImageButton:(id)sender;
+
+- (IBAction)telButton:(id)sender;
+- (IBAction)homepageButton:(id)sender;
 
 @end

@@ -38,7 +38,6 @@
     searchResultText.text = @"";
     
     mapFirstCheck = 0;
-    arrIndexNum = 0;
     
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
@@ -141,8 +140,14 @@
         
         searchResultText.text = [NSString stringWithFormat:@"%@ 검색 결과는 총 %ld 건 입니다.", addressText.text, [churchArr count]];
         
+        searchResultText.hidden = NO;
         mapTableView.hidden = NO;
-        mkView.frame = CGRectMake(0, 70, self.view.frame.size.width, self.view.frame.size.height - 170);
+        mkView.frame = CGRectMake(0, 70, self.view.frame.size.width, self.view.frame.size.height - 70 - self.view.frame.size.height/2);
+        searchResultText.frame = CGRectMake(10, mkView.frame.size.height + 70, self.view.frame.size.width - 20, 20);
+        UIView *lineView = [[UIView alloc] initWithFrame:CGRectMake(10, mkView.frame.size.height + 70 + 19.5, self.view.frame.size.width - 20, 0.5)];
+        lineView.backgroundColor = [UIColor lightGrayColor];
+        [self.view addSubview:lineView];
+        mapTableView.frame = CGRectMake(10, mkView.frame.size.height + 70 + 20, self.view.frame.size.width - 20, self.view.frame.size.height - mkView.frame.size.height - 70);
         
         [self loadingClose];
     }];
@@ -312,8 +317,6 @@
 }
 
 - (void)selectAction:(UIButton*)sender{
-    arrIndexNum = sender.tag;
-    
     nextDic = [churchArr objectAtIndex:sender.tag];
     
     [self performSegueWithIdentifier:@"detail" sender:nil];

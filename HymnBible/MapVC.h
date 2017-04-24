@@ -31,7 +31,6 @@
     float rLongitude;
     
     NSArray *churchArr;
-    NSInteger arrIndexNum;
     
     MKMapView *mkMapView;
     
