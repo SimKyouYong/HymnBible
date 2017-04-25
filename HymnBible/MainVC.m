@@ -47,6 +47,12 @@
     
     speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
     [speechToTextModule setDelegate:self];
+    
+    for (id subview in self.MainWebView.subviews) {
+        if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
+            ((UIScrollView *)subview).bounces = NO;
+        }
+    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
