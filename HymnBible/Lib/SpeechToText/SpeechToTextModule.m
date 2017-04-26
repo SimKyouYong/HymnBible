@@ -14,7 +14,7 @@
 #define	SAFE_RELEASE(ptr)	{if(ptr!=nil){if ([ptr respondsToSelector:@selector(setDelegate:)]) {[ptr performSelector:@selector(setDelegate:) withObject:nil];}[ptr release];ptr=nil;}}
 
 #define FRAME_SIZE 110
-#define GOOGLE_SPEECH_TO_TEXT_KEY @"AIzaSyDN-pxLQg_eeo0XJc9bnxGR_m1Gd21eZKU"
+#define GOOGLE_SPEECH_TO_TEXT_KEY @"AIzaSyDNsfgrFeAXOqqOJmbdNX3MWZ5t-xzjt3U"//@"AIzaSyDN-pxLQg_eeo0XJc9bnxGR_m1Gd21eZKU"
 #define GARBAGE_RESULT_VALUE @"{\"result\":[]}"
 
 @interface SpeechToTextModule ()

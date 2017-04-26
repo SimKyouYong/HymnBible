@@ -45,14 +45,14 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [MainWebView loadRequest:request];
     
-    speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
-    [speechToTextModule setDelegate:self];
-    
     for (id subview in self.MainWebView.subviews) {
         if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
             ((UIScrollView *)subview).bounces = NO;
         }
     }
+    
+    speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
+    [speechToTextModule setDelegate:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -275,6 +275,18 @@
                 addView.hidden = NO;
                 addNum = 2;
             }
+            
+        // 유튜브 앱 실행
+        }else if([fURL hasPrefix:@"js2ios://Youtube?"]){
+            NSArray *urlArr1 = [fURL componentsSeparatedByString:@"url="];
+            NSString *urlStr1 = [urlArr1 objectAtIndex:1];
+            NSArray *urlArr2 = [urlStr1 componentsSeparatedByString:@"&"];
+            NSString *youtubeValue = [urlArr2 objectAtIndex:0];
+            youtubeValue = [youtubeValue stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+            
+            NSString *stringURL = [NSString stringWithFormat:@"https://www.youtube.com/results?search_query=%@", youtubeValue];
+            NSURL *url = [NSURL URLWithString:stringURL];
+            [[UIApplication sharedApplication] openURL:url];
         }
         
         return NO;
