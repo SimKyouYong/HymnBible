@@ -13,7 +13,6 @@
 
 // NSUserDefault
 #define TOKEN_KEY           @"token_key"
-#define ADD_PEOPLE_MAIN     @"add_people_main"
 #define ADD_PEOPLE_SETTING  @"add_people_setting"
 #define MY_ID               @"my_id"
 #define PUSH                @"push_setting"

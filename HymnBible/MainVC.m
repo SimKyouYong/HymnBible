@@ -17,6 +17,8 @@
 #import "SpeechToTextModule.h"
 #import "KeychainItemWrapper.h"
 
+#define NUMBER_TEXT     @"0123456789"
+
 @interface MainVC () <SpeechToTextModuleDelegate>  {
     SpeechToTextModule *speechToTextModule;
     BOOL isRecording;
@@ -42,8 +44,6 @@
     
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
-    
-    NSLog(@"%@", [self getPhoneID]);
     
     if([self getPhoneID].length == 0){
         alphaView.hidden = NO;
@@ -83,13 +83,16 @@
     return decoded;
 }
 
+// 숫자만 입력되게
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSCharacterSet *cs = [[NSCharacterSet characterSetWithCharactersInString:NUMBER_TEXT] invertedSet];
+    NSString *filtered = [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    
+    return [string isEqualToString:filtered];
+}
+
 #pragma mark -
 #pragma mark Button Action
-
-- (IBAction)firstCancelButton:(id)sender {
-    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"최초 본인 휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-    [alert show];
-}
 
 - (IBAction)firstSubmitButton:(id)sender {
     [addText resignFirstResponder];
@@ -104,28 +107,19 @@
     }
 }
 
-// 휴대폰 번호 & 추천인 통신
+// 휴대폰 번호 & 추천인 통신(최초 한번만)
 - (void)firstInit{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@recommender-proc.do", MAIN_URL];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getPhoneID], addText.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@&uuid=%@", [self getPhoneID], addText.text, [self getUUID]];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
         //NSLog(@"Response:%@ %@\n", response, error);
-        
-        if(addNum == 1){
-            [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
-        }else{
-            [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
-        }
         
         alphaView.hidden = YES;
         firstView.hidden = YES;
@@ -139,7 +133,7 @@
     [dataTask resume];
 }
 
-// 추천인 있으면 통신
+// 추천인 없으면 통신
 - (void)httpInit{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
@@ -157,11 +151,7 @@
         //NSLog(@"Response:%@ %@\n", response, error);
         //NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         
-        if(addNum == 1){
-            [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
-        }else{
-            [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
-        }
+        [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
         
         alphaView.hidden = YES;
         addView.hidden = YES;
@@ -180,14 +170,6 @@
 - (IBAction)cancelButton:(id)sender {
     alphaView.hidden = YES;
     addView.hidden = YES;
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    if(addNum == 1){
-        [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
-    }else{
-        [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
-    }
 }
 
 - (IBAction)closeButton:(id)sender {
@@ -335,7 +317,6 @@
             if([defaults stringForKey:ADD_PEOPLE_MAIN].length == 0){
                 alphaView.hidden = NO;
                 firstView.hidden = NO;
-                addNum = 1;
             }
              */
         
@@ -346,7 +327,6 @@
             if([defaults stringForKey:ADD_PEOPLE_SETTING].length == 0){
                 alphaView.hidden = NO;
                 addView.hidden = NO;
-                addNum = 2;
             }
             
         // 유튜브 앱 실행

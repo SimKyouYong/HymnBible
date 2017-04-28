@@ -27,9 +27,6 @@
     UIView *loadingView;
     UILabel *loadingLabel;
     
-    // 추천인(메인 : 0, 설정 : 1)
-    NSInteger addNum;
-    
     // 찬송가 상세화면에서 백했을때 로딩바 안나오게
     NSInteger musicFlag;
     
@@ -43,7 +40,6 @@
 @property (weak, nonatomic) IBOutlet UIView *firstView;
 @property (weak, nonatomic) IBOutlet UITextField *phoneText;
 @property (weak, nonatomic) IBOutlet UITextField *addText;
-- (IBAction)firstCancelButton:(id)sender;
 - (IBAction)firstSubmitButton:(id)sender;
 
 // 설정에서 추천인 입력 뷰
