@@ -8,8 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "HTTPNetworkManager.h"
+#import <MessageUI/MFMailComposeViewController.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface MainVC : UIViewController<ASIHTTPRequestDelegate>{
+@interface MainVC : UIViewController<ASIHTTPRequestDelegate, MFMailComposeViewControllerDelegate>{
     NSString *fURL;
     
     HTTPNetworkManager *requestDownload;
@@ -27,11 +29,24 @@
     
     // 추천인(메인 : 0, 설정 : 1)
     NSInteger addNum;
+    
+    // 찬송가 상세화면에서 백했을때 로딩바 안나오게
+    NSInteger musicFlag;
+    
+    AVSpeechSynthesizer *synthesizer;
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;
 @property (weak, nonatomic) IBOutlet UIView *alphaView;
 
+// 최초 실행시 본인 휴대폰 번호랑 추천인 입력
+@property (weak, nonatomic) IBOutlet UIView *firstView;
+@property (weak, nonatomic) IBOutlet UITextField *phoneText;
+@property (weak, nonatomic) IBOutlet UITextField *addText;
+- (IBAction)firstCancelButton:(id)sender;
+- (IBAction)firstSubmitButton:(id)sender;
+
+// 설정에서 추천인 입력 뷰
 @property (weak, nonatomic) IBOutlet UIView *addView;
 @property (weak, nonatomic) IBOutlet UITextField *addText2;
 - (IBAction)submitButton2:(id)sender;

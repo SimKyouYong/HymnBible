@@ -50,6 +50,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *animationView;
 @property (weak, nonatomic) IBOutlet UILabel *sttText;
 - (IBAction)closeButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *closebutton;
 
 @property (weak, nonatomic) IBOutlet UIView *mkView;
 @property (weak, nonatomic) IBOutlet UITableView *mapTableView;

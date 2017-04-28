@@ -28,6 +28,7 @@
 @synthesize addressText;
 @synthesize mapTableView;
 @synthesize searchResultText;
+@synthesize closebutton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -50,7 +51,6 @@
     mkMapView.showsUserLocation = YES;
     [mkMapView setMapType:MKMapTypeStandard];
     [mkView addSubview:mkMapView];
-    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -192,8 +192,8 @@
                 
                 region.center = CLLocationCoordinate2DMake(35.95, 128.25);
                 
-                region.span.longitudeDelta /= 35.0;
-                region.span.latitudeDelta /= 35.0;
+                region.span.longitudeDelta /= 18.0;
+                region.span.latitudeDelta /= 18.0;
                 [mkMapView setRegion:region animated:NO];
             }
         }
@@ -257,6 +257,7 @@
 }
 
 - (IBAction)sstButton:(id)sender {
+    alphaView.hidden = NO;
     [self startRecording];
 }
 
@@ -334,6 +335,8 @@
         animationView.hidden = NO;
         [speechToTextModule beginRecording];
         isRecording = YES;
+        sttText.hidden = NO;
+        closebutton.hidden = NO;
     }
 }
 
@@ -342,6 +345,8 @@
         animationView.hidden = YES;
         [speechToTextModule stopRecording:YES];
         isRecording = NO;
+        sttText.hidden = YES;
+        closebutton.hidden = YES;
     }
 }
 

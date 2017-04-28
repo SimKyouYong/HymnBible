@@ -27,6 +27,9 @@
 
 @synthesize MainWebView;
 @synthesize alphaView;
+@synthesize firstView;
+@synthesize phoneText;
+@synthesize addText;
 @synthesize addView;
 @synthesize addText2;
 @synthesize animationImageView;
@@ -40,8 +43,8 @@
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getUUID]];
-    NSURL *url = [NSURL URLWithString:urlString];
+    NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getPhoneID]];
+    NSURL *url = [NSURL URLWithString:@"http://shqrp5200.cafe24.com/index.do?phone="];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [MainWebView loadRequest:request];
     
@@ -53,6 +56,8 @@
     
     speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
     [speechToTextModule setDelegate:self];
+    
+    musicFlag = 0;
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -65,7 +70,6 @@
 }
 
 - (NSString *)decodeStr:(NSString *)str{
-    
     CFStringRef s = CFURLCreateStringByReplacingPercentEscapesUsingEncoding(NULL, (CFStringRef)str, CFSTR(""), kCFStringEncodingUTF8);
     NSString* decoded = [NSString stringWithFormat:@"%@", (__bridge NSString*)s];
     CFRelease(s);
@@ -75,27 +79,92 @@
 #pragma mark -
 #pragma mark Button Action
 
+- (IBAction)firstCancelButton:(id)sender {
+    UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"최초 본인 휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+    [alert show];
+}
+
+- (IBAction)firstSubmitButton:(id)sender {
+    [addText resignFirstResponder];
+    [phoneText resignFirstResponder];
+    
+    if(phoneText.text.length == 0){
+        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"본인 휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+        [alert show];
+    }else{
+        [self setPhoneID:phoneText.text];
+        [self firstInit];
+    }
+}
+
+// 휴대폰 번호 & 추천인 통신
+- (void)firstInit{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@recommender-proc.do", MAIN_URL];
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getPhoneID], addText.text];
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        //NSLog(@"Response:%@ %@\n", response, error);
+        //NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+        if (statusCode == 200) {
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            if(addNum == 1){
+                [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
+            }else{
+                [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
+            }
+        }else{
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"잠시 후 다시 시도해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+            [alert show];
+        }
+        
+        alphaView.hidden = YES;
+        firstView.hidden = YES;
+        [self loadingClose];
+    }];
+    [dataTask resume];
+}
+
 // 추천인 있으면 통신
 - (void)httpInit{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@/recommender-proc.do", MAIN_URL];
+    NSString *urlString = [NSString stringWithFormat:@"%@recommender-proc.do", MAIN_URL];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getUUID], addText2.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getPhoneID], addText2.text];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Response:%@ %@\n", response, error);
+        //NSLog(@"Response:%@ %@\n", response, error);
+        //NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        
         NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
         if (statusCode == 200) {
-            
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            if(addNum == 1){
+                [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
+            }else{
+                [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
+            }
         }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"통신에러" delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"잠시 후 다시 시도해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
             [alert show];
         }
         
@@ -106,19 +175,11 @@
     [dataTask resume];
 }
 
-// 추천인 팝업뷰
+// 추천인 팝업뷰 확인버튼
 - (IBAction)submitButton2:(id)sender {
     [self httpInit];
     
     [addText2 resignFirstResponder];
-    
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    if(addNum == 1){
-        [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
-    }else{
-        [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
-    }
 }
 
 - (IBAction)cancelButton:(id)sender {
@@ -226,47 +287,62 @@
         }else if([fURL hasPrefix:@"js2ios://ChurchSearch?"]){
             [self performSegueWithIdentifier:@"map" sender:nil];
         
-        // 설정(푸시)
+        // 설정(푸시) Get
         }else if([fURL hasPrefix:@"js2ios://GetPush?"]){
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults synchronize];
             
+            NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
+            NSString *returnStr = [returnArr1 objectAtIndex:1];
+            
+            NSString *scriptValue = @"";
+            scriptValue = [NSString stringWithFormat:@"javascript:%@('%@','%@','%@')",returnStr, [defaults stringForKey:PUSH], [defaults stringForKey:PUSH_SOUND], [defaults stringForKey:PUSH_VALIT]];
+            
+            [MainWebView stringByEvaluatingJavaScriptFromString:scriptValue];
+            
+        // 설정(푸시) Set
+        }else if([fURL hasPrefix:@"js2ios://SetPush?"]){
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            [defaults synchronize];
+            
+            NSArray *onOffArr1 = [fURL componentsSeparatedByString:@"url="];
+            NSString *onOffStr1 = [onOffArr1 objectAtIndex:1];
+            NSArray *onOffArr2 = [onOffStr1 componentsSeparatedByString:@"&"];
+            NSString *onOffValue = [onOffArr2 objectAtIndex:0];
+            
             NSArray *urlArr1 = [fURL componentsSeparatedByString:@"str="];
             NSString *urlStr1 = [urlArr1 objectAtIndex:1];
             NSArray *urlArr2 = [urlStr1 componentsSeparatedByString:@"&"];
-            NSString *pushValue = [urlArr2 objectAtIndex:0];
-            NSLog(@"%@", pushValue);
+            NSString *settingValue = [urlArr2 objectAtIndex:0];
             
-            NSString *srciptValue = @"";
-            if([pushValue isEqualToString:@"ALL"]){
-                srciptValue = [NSString stringWithFormat:@"javascript:return_fun('PUSH','PUSHSOUND','PUSHVALIT')"];
-                
-                [defaults setObject:@"ALL" forKey:PUSH_SETTING];
-            }else{
-                if([pushValue isEqualToString:@""]){
-                    srciptValue = [NSString stringWithFormat:@"javascript:return_fun('off')"];
-                    
-                    [defaults setObject:@"off" forKey:PUSH_SETTING];
-                }else{
-                    srciptValue = [NSString stringWithFormat:@"javascript:return_fun('%@')", pushValue];
-                    
-                    [defaults setObject:pushValue forKey:PUSH_SETTING];
-                }
+            NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
+            NSString *returnStr = [returnArr1 objectAtIndex:1];
+            
+            NSString *scriptValue = @"";
+            if([settingValue isEqualToString:@"PUSH"]){
+                scriptValue = [NSString stringWithFormat:@"javascript:%@('%@','%@')",returnStr, settingValue, onOffValue];
+                [defaults setObject:onOffValue forKey:PUSH];
+            }else if([settingValue isEqualToString:@"PUSHSOUND"]){
+                scriptValue = [NSString stringWithFormat:@"javascript:%@('%@','%@')",returnStr, settingValue, onOffValue];
+                [defaults setObject:onOffValue forKey:PUSH_SOUND];
+            }else if([settingValue isEqualToString:@"PUSHVALIT"]){
+                scriptValue = [NSString stringWithFormat:@"javascript:%@('%@','%@')",returnStr, settingValue, onOffValue];
+                [defaults setObject:onOffValue forKey:PUSH_VALIT];
             }
-            
-            [MainWebView stringByEvaluatingJavaScriptFromString:pushValue];
+      
+            [MainWebView stringByEvaluatingJavaScriptFromString:scriptValue];
         
         // 추천인 입력(메인)
         }else if([fURL hasPrefix:@"js2ios://FirstInputAlert?"]){
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults synchronize];
             if([defaults stringForKey:ADD_PEOPLE_MAIN].length == 0){
-                alphaView.hidden = NO;
-                addView.hidden = NO;
+                //alphaView.hidden = NO;
+                //firstView.hidden = NO;
                 addNum = 1;
             }
         
-        // 추천인 입력(메인)
+        // 추천인 입력(설정)
         }else if([fURL hasPrefix:@"js2ios://InputAlert?"]){
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults synchronize];
@@ -287,6 +363,40 @@
             NSString *stringURL = [NSString stringWithFormat:@"https://www.youtube.com/results?search_query=%@", youtubeValue];
             NSURL *url = [NSURL URLWithString:stringURL];
             [[UIApplication sharedApplication] openURL:url];
+        
+        // 앱 버전
+        }else if([fURL hasPrefix:@"js2ios://AppVersion?"]){
+            NSString *appVersion = [NSString stringWithFormat:@"해당 앱 버전은 %@입니다.", [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"]];
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"개발 및 버전 정보" message:appVersion delegate:self cancelButtonTitle:nil otherButtonTitles:@"확인" ,nil];
+            [alert show];
+        
+        // 문의하기
+        }else if([fURL hasPrefix:@"js2ios://Question?"]){
+            [self displayComposerSheet];
+        
+        // 공유하기
+        }else if([fURL hasPrefix:@"js2ios://AppShare?"]){
+            NSString *title = @"안녕하세요. 성경찬송입니다. 다운받을 주소는 https://itunes.apple.com/us/app/facebook/id284882215?mt=8 입니다. 감사합니다.";
+            NSURL *url = [[NSURL alloc]initWithString:@""];
+            NSArray *postItems = @[title, url];
+            UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:postItems applicationActivities:nil];
+            
+            activityVC.excludedActivityTypes = @[];
+            
+            [self presentViewController:activityVC animated:YES completion:nil];
+        
+        // 성경 TTS
+        }else if([fURL hasPrefix:@"js2ios://TTS_Start?"]){
+            NSArray *ttsArr1 = [fURL componentsSeparatedByString:@"str="];
+            NSString *ttsStr1 = [ttsArr1 objectAtIndex:1];
+            NSArray *ttsArr2 = [ttsStr1 componentsSeparatedByString:@"&"];
+            NSString *ttsValue = [ttsArr2 objectAtIndex:0];
+            
+            AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:ttsValue];
+            synthesizer = [[AVSpeechSynthesizer alloc] init];
+            utterance.rate = 0.3;
+            utterance.pitchMultiplier = 1.0;
+            [synthesizer speakUtterance:utterance];
         }
         
         return NO;
@@ -319,7 +429,21 @@
 - (void)webViewDidStartLoad:(UIWebView *)webView{
     NSLog(@"start");
     
-    [self loadingInit];
+    [synthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+    
+    if([fURL isEqualToString:@"http://shqrp5200.cafe24.com/hymn/hymn_list.do"]){
+        if(musicFlag == 1){
+            musicFlag = 0;
+        }else{
+            [self loadingInit];
+        }
+    }else{
+        if([fURL hasPrefix:@"http://shqrp5200.cafe24.com/hymn/hymn_view.do?"]){
+            musicFlag = 1;
+        }else{
+            [self loadingInit];
+        }
+    }
 }
 
 // 웹뷰가 컨텐츠를 모두 읽은 후에 실행된다.
@@ -513,9 +637,96 @@
 }
 
 #pragma mark -
-#pragma mark UUID
+#pragma mark Mail Method
 
-- (NSString*) getUUID{
+- (void)displayComposerSheet{
+    if ([MFMailComposeViewController canSendMail])
+    {
+        MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+        // 델리게이트 지정
+        picker.mailComposeDelegate = self;
+        
+        // 제목
+        NSString *subjectValue = @"[문의하기]문의 드립니다.";
+        [picker setSubject:subjectValue];
+        
+        // 수신자
+        NSArray *toRecipients = [NSArray arrayWithObject:@"sharp5200@naver.com"];
+        
+        // 참조
+        //NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil];
+        //NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com"];
+        
+        [picker setToRecipients:toRecipients];
+        //[picker setCcRecipients:ccRecipients];
+        //[picker setBccRecipients:bccRecipients];
+        
+        // 이미지
+        //NSString *path = [[NSBundle mainBundle] pathForResource:@"rainy" ofType:@"png"];
+        //NSData *myData = [NSData dataWithContentsOfFile:path];
+        //[picker addAttachmentData:myData mimeType:@"image/png" fileName:@"rainy"];
+        
+        // 내용
+        NSString *emailBody = @"";
+        [picker setMessageBody:emailBody isHTML:NO];
+        
+        // 뷰 호출
+        [self presentViewController:picker animated:YES completion:nil];
+    }else{
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"메일 계정이 없습니다."
+                                                       delegate:self cancelButtonTitle:nil otherButtonTitles:@"확인" ,nil];
+        [alert show];
+    }
+}
+
+// 델리게이트
+- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
+{
+    // 결과 값에 따른 상태 활용
+    switch (result)
+    {
+            // 취소
+        case MFMailComposeResultCancelled:
+            //message.text = @"Result: canceled";
+            break;
+            // 저장
+        case MFMailComposeResultSaved:
+            //message.text = @"Result: saved";
+            break;
+            // 보내기
+        case MFMailComposeResultSent:
+            //message.text = @"Result: sent";
+            break;
+            // 실패
+        case MFMailComposeResultFailed:
+            //message.text = @"Result: failed";
+            break;
+        default:
+            //message.text = @"Result: not sent";
+            break;
+    }
+    // 메일 보내기 창 닫기
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark -
+#pragma mark Keychain Phone & UUID
+
+- (void)setPhoneID:(NSString*)phoneValue{
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:@"PHONE" accessGroup:nil];
+    [wrapper setObject:phoneValue forKey:(__bridge id)(kSecAttrAccount)];
+}
+
+- (NSString*)getPhoneID{
+    KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:@"PHONE" accessGroup:nil];
+    
+    NSString *phone = @"";
+    phone = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];
+    
+    return phone;
+}
+
+- (NSString*)getUUID{
     KeychainItemWrapper *wrapper = [[KeychainItemWrapper alloc] initWithIdentifier:@"UUID" accessGroup:nil];
     
     NSString *uuid = [wrapper objectForKey:(__bridge id)(kSecAttrAccount)];

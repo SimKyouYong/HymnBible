@@ -44,6 +44,12 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
+    if([defaults stringForKey:PUSH].length == 0){
+        [defaults setObject:@"on" forKey:PUSH];
+        [defaults setObject:@"on" forKey:PUSH_SOUND];
+        [defaults setObject:@"on" forKey:PUSH_VALIT];
+    }
+    
     // APNS 등록
     if([defaults stringForKey:TOKEN_KEY].length == 0){
         if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")){
