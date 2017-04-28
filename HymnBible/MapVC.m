@@ -212,6 +212,8 @@
 }
 
 - (IBAction)searchButton:(id)sender {
+    [addressText resignFirstResponder];
+    
     mapFirstCheck = 1;
     
     if(addressText.text.length == 0){

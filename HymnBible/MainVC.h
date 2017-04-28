@@ -44,3 +44,7 @@
 - (IBAction)closeButton:(id)sender;
 
 @end
+
+@interface UIWebView (Javascript)
+- (void)webView:(UIWebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message     initiatedByFrame:(id *)frame;
+@end

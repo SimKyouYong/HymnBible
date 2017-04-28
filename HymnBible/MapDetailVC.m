@@ -39,7 +39,7 @@
     
     //NSLog(@"mapDetailDic : %@", mapDetailDic);
     
-    churchNameText.text = [mapDetailDic objectForKey:@"church_name"];
+    churchNameText.text = [NSString stringWithFormat:@"교회찾기 / %@", [mapDetailDic objectForKey:@"church_name"]];
     nameText.text = [mapDetailDic objectForKey:@"church_name"];
     nameText2.text = [mapDetailDic objectForKey:@"church_type"];
     nameText3.text = [mapDetailDic objectForKey:@"person_name"];

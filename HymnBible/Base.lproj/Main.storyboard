@@ -562,8 +562,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fzp-xS-5iU">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jW7-6F-xKy">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jW7-6F-xKy">
+                                        <rect key="frame" x="60" y="0.0" width="540" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="RXP-OX-LfM"/>
                                         </constraints>
@@ -588,27 +588,15 @@
                                             <action selector="backButton:" destination="sdd-Ej-LpL" eventType="touchUpInside" id="H6j-cK-g9F"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="교회찾기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V1S-0C-N4J">
-                                        <rect key="frame" x="60" y="0.0" width="80" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="DKf-b9-ohH"/>
-                                            <constraint firstAttribute="width" constant="80" id="zJs-iw-W0c"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="jW7-6F-xKy" secondAttribute="trailing" id="3Sx-4P-32A"/>
                                     <constraint firstItem="jW7-6F-xKy" firstAttribute="top" secondItem="Fzp-xS-5iU" secondAttribute="top" id="CpE-es-qXC"/>
-                                    <constraint firstItem="V1S-0C-N4J" firstAttribute="top" secondItem="Fzp-xS-5iU" secondAttribute="top" id="Iva-D1-ZHa"/>
+                                    <constraint firstItem="jW7-6F-xKy" firstAttribute="leading" secondItem="zFP-8b-z4H" secondAttribute="trailing" constant="10" id="E7k-4o-SuP"/>
                                     <constraint firstItem="PwU-Wj-KdF" firstAttribute="top" secondItem="Fzp-xS-5iU" secondAttribute="top" constant="14" id="K6Y-3n-mhB"/>
                                     <constraint firstAttribute="height" constant="50" id="SeA-N1-IaJ"/>
                                     <constraint firstItem="zFP-8b-z4H" firstAttribute="leading" secondItem="Fzp-xS-5iU" secondAttribute="leading" id="WKB-yM-hcz"/>
-                                    <constraint firstItem="V1S-0C-N4J" firstAttribute="leading" secondItem="zFP-8b-z4H" secondAttribute="trailing" constant="10" id="XTy-Bp-N8z"/>
-                                    <constraint firstItem="jW7-6F-xKy" firstAttribute="leading" secondItem="Fzp-xS-5iU" secondAttribute="leading" id="YdB-2c-g5i"/>
                                     <constraint firstItem="zFP-8b-z4H" firstAttribute="top" secondItem="Fzp-xS-5iU" secondAttribute="top" id="dpu-sQ-cJg"/>
                                     <constraint firstItem="PwU-Wj-KdF" firstAttribute="leading" secondItem="Fzp-xS-5iU" secondAttribute="leading" constant="18" id="zZ5-Ho-HZb"/>
                                 </constraints>

@@ -536,4 +536,9 @@
 
 @end
 
-
+@implementation UIWebView (Javascript)
+- (void)webView:(UIWebView *)sender runJavaScriptAlertPanelWithMessage:(NSString *)message initiatedByFrame:(id *)frame {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"알림" message:message delegate:nil cancelButtonTitle:@"확인" otherButtonTitles: nil];
+    [alert show];
+}
+@end
