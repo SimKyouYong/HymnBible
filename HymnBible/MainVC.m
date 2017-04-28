@@ -43,10 +43,17 @@
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getPhoneID]];
-    NSURL *url = [NSURL URLWithString:@"http://shqrp5200.cafe24.com/index.do?phone="];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [MainWebView loadRequest:request];
+    NSLog(@"%@", [self getPhoneID]);
+    
+    if([self getPhoneID].length == 0){
+        alphaView.hidden = NO;
+        firstView.hidden = NO;
+    }else{
+        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getPhoneID]];
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [MainWebView loadRequest:request];
+    }
     
     for (id subview in self.MainWebView.subviews) {
         if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
@@ -107,31 +114,27 @@
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", @"daslkjfqwerqurekljasdnmzvcxnasdlfkjasdurqwuqweproipqre", addText.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getPhoneID], addText.text];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Response:%@ %@\n", response, error);
-        NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        //NSLog(@"Response:%@ %@\n", response, error);
         
-        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-        if (statusCode == 200) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults synchronize];
-            if(addNum == 1){
-                [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
-            }else{
-                [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
-            }
+        if(addNum == 1){
+            [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
         }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"잠시 후 다시 시도해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-            [alert show];
+            [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
         }
         
         alphaView.hidden = YES;
         firstView.hidden = YES;
         [self loadingClose];
+        
+        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getPhoneID]];
+        NSURL *url = [NSURL URLWithString:urlString];
+        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+        [MainWebView loadRequest:request];
     }];
     [dataTask resume];
 }
@@ -154,18 +157,10 @@
         //NSLog(@"Response:%@ %@\n", response, error);
         //NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         
-        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
-        if (statusCode == 200) {
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults synchronize];
-            if(addNum == 1){
-                [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
-            }else{
-                [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
-            }
+        if(addNum == 1){
+            [defaults setObject:@"YES" forKey:ADD_PEOPLE_MAIN];
         }else{
-            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"잠시 후 다시 시도해주세요." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
-            [alert show];
+            [defaults setObject:@"YES" forKey:ADD_PEOPLE_SETTING];
         }
         
         alphaView.hidden = YES;
@@ -334,6 +329,7 @@
         
         // 추천인 입력(메인)
         }else if([fURL hasPrefix:@"js2ios://FirstInputAlert?"]){
+            /*
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults synchronize];
             if([defaults stringForKey:ADD_PEOPLE_MAIN].length == 0){
@@ -341,6 +337,7 @@
                 firstView.hidden = NO;
                 addNum = 1;
             }
+             */
         
         // 추천인 입력(설정)
         }else if([fURL hasPrefix:@"js2ios://InputAlert?"]){
