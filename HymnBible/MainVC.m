@@ -107,13 +107,13 @@
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getPhoneID], addText.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", @"daslkjfqwerqurekljasdnmzvcxnasdlfkjasdurqwuqweproipqre", addText.text];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        //NSLog(@"Response:%@ %@\n", response, error);
-        //NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        NSLog(@"Response:%@ %@\n", response, error);
+        NSString *returnStr = [[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         
         NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
         if (statusCode == 200) {
@@ -337,8 +337,8 @@
             NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
             [defaults synchronize];
             if([defaults stringForKey:ADD_PEOPLE_MAIN].length == 0){
-                //alphaView.hidden = NO;
-                //firstView.hidden = NO;
+                alphaView.hidden = NO;
+                firstView.hidden = NO;
                 addNum = 1;
             }
         
@@ -385,18 +385,34 @@
             
             [self presentViewController:activityVC animated:YES completion:nil];
         
-        // 성경 TTS
+        // 성경 TTS Start
         }else if([fURL hasPrefix:@"js2ios://TTS_Start?"]){
             NSArray *ttsArr1 = [fURL componentsSeparatedByString:@"str="];
             NSString *ttsStr1 = [ttsArr1 objectAtIndex:1];
             NSArray *ttsArr2 = [ttsStr1 componentsSeparatedByString:@"&"];
             NSString *ttsValue = [ttsArr2 objectAtIndex:0];
             
+            NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
+            NSString *returnStr = [returnArr1 objectAtIndex:1];
+            
             AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:ttsValue];
             synthesizer = [[AVSpeechSynthesizer alloc] init];
             utterance.rate = 0.3;
             utterance.pitchMultiplier = 1.0;
             [synthesizer speakUtterance:utterance];
+            
+            NSString *scriptValue = [NSString stringWithFormat:@"javscript:%@('true')", returnStr];
+            [MainWebView stringByEvaluatingJavaScriptFromString:scriptValue];
+        
+            // 성경 TTS Stop
+        }else if([fURL hasPrefix:@"js2ios://TTS_Stop?"]){
+            NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
+            NSString *returnStr = [returnArr1 objectAtIndex:1];
+            
+            [synthesizer stopSpeakingAtBoundary:AVSpeechBoundaryImmediate];
+            
+            NSString *scriptValue = [NSString stringWithFormat:@"javscript:%@('false')", returnStr];
+            [MainWebView stringByEvaluatingJavaScriptFromString:scriptValue];
         }
         
         return NO;
