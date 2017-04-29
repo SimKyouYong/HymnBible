@@ -83,13 +83,38 @@
 
 // 애플리케이션이 푸시서버에 성공적으로 등록되었을때 호출됨
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+//    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    [defaults synchronize];
+//    
+//    NSString *devToken = [[[[deviceToken description]stringByReplacingOccurrencesOfString:@"<" withString:@""]stringByReplacingOccurrencesOfString:@">" withString:@""]stringByReplacingOccurrencesOfString:@" " withString:@""];
+//    
+//    NSLog(@"device token : %@", devToken);
+//    [defaults setObject:devToken forKey:TOKEN_KEY];
+    
+    
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
     NSString *devToken = [[[[deviceToken description]stringByReplacingOccurrencesOfString:@"<" withString:@""]stringByReplacingOccurrencesOfString:@">" withString:@""]stringByReplacingOccurrencesOfString:@" " withString:@""];
-    
     NSLog(@"device token : %@", devToken);
     [defaults setObject:devToken forKey:TOKEN_KEY];
+    
+    NSString *urlString = [NSString stringWithFormat:@"%@?reg_id=%@", @"http://shqrp5200.cafe24.com/IOS_Insert.jsp", devToken];
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
+    
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"Response:%@ %@\n", response, error);
+    }];
+    [dataTask resume];
+
+    
+    
+    
+    
 }
 
 // registerForRemoteNotificationTyles 결과 실패했을 때 호출됨

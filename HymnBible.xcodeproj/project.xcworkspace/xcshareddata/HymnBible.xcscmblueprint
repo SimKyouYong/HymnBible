@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "F2C57407D8901F1BB51B18BD2545DEF660CB9345",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "F2C57407D8901F1BB51B18BD2545DEF660CB9345" : 9223372036854775807,
+    "ADD9AAAB7AAB77B02BDE9F114BF86A6CE52F5915" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "74FF20DB-AEA1-4333-8E14-547DEF39D1FB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "F2C57407D8901F1BB51B18BD2545DEF660CB9345" : "HymnBible\/",
+    "ADD9AAAB7AAB77B02BDE9F114BF86A6CE52F5915" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HymnBible",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HymnBible.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SimKyouYong\/TestSam.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "ADD9AAAB7AAB77B02BDE9F114BF86A6CE52F5915"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/SimKyouYong\/HymnBible.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "F2C57407D8901F1BB51B18BD2545DEF660CB9345"
+    }
+  ]
+}
