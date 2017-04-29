@@ -18,3 +18,4 @@
 #define PUSH                @"push_setting"
 #define PUSH_SOUND          @"push_sound"
 #define PUSH_VALIT          @"push_valit"
+#define PHONE_ID            @"phone_id"

@@ -31,6 +31,8 @@
     NSInteger musicFlag;
     
     AVSpeechSynthesizer *synthesizer;
+    
+    NSUserDefaults *defaults;
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;
@@ -41,6 +43,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *phoneText;
 @property (weak, nonatomic) IBOutlet UITextField *addText;
 - (IBAction)firstSubmitButton:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *firstSubmitButton;
 
 // 설정에서 추천인 입력 뷰
 @property (weak, nonatomic) IBOutlet UIView *addView;

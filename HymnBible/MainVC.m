@@ -38,6 +38,7 @@
 @synthesize loadingAlphaView;
 @synthesize sttText;
 @synthesize closeButton;
+@synthesize firstSubmitButton;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -45,7 +46,10 @@
     //[[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.view.backgroundColor = [UIColor colorWithRed:0.0/255.0 green:122.0/255.0 blue:255.0/255.0 alpha:1.0];
     
-    if([self getPhoneID].length == 0){
+    defaults = [NSUserDefaults standardUserDefaults];
+    [defaults synchronize];
+    
+    if([defaults stringForKey:PHONE_ID].length == 0){
         alphaView.hidden = NO;
         firstView.hidden = NO;
     }else{
@@ -53,6 +57,8 @@
         NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [MainWebView loadRequest:request];
+        
+        [self pushInit];
     }
     
     for (id subview in self.MainWebView.subviews) {
@@ -102,10 +108,31 @@
         UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"알림" message:@"본인 휴대폰 번호는 필수 입력입니다." delegate:nil cancelButtonTitle:@"확인" otherButtonTitles:nil, nil];
         [alert show];
     }else{
-        [self setPhoneID:phoneText.text];
+        firstSubmitButton.enabled = NO;
+        
+        [defaults setObject:phoneText.text forKey:PHONE_ID];
         [self firstInit];
     }
 }
+
+// 푸시키 전송
+- (void)pushInit{
+    NSString *urlString = [NSString stringWithFormat:@"%@", DB_ADD_URL];
+    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
+    
+    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+    NSString *params = [NSString stringWithFormat:@"phone=%@&reg_id=%@&type=ios", [defaults stringForKey:PHONE_ID], [defaults stringForKey:TOKEN_KEY]];
+    
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSLog(@"Response:%@ %@\n", response, error);
+    }];
+    [dataTask resume];
+}
+
 
 // 휴대폰 번호 & 추천인 통신(최초 한번만)
 - (void)firstInit{
@@ -114,7 +141,7 @@
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration:defaultConfigObject delegate:nil delegateQueue:[NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@&uuid=%@", [self getPhoneID], addText.text, [self getUUID]];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@&uuid=%@", phoneText.text, addText.text, [self getUUID]];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -125,25 +152,26 @@
         firstView.hidden = YES;
         [self loadingClose];
         
+        [defaults setObject:phoneText.text forKey:PHONE_ID];
+        
         NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getPhoneID]];
         NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [MainWebView loadRequest:request];
+        
+        [self pushInit];
     }];
     [dataTask resume];
 }
 
 // 추천인 없으면 통신
 - (void)httpInit{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults synchronize];
-    
     NSString *urlString = [NSString stringWithFormat:@"%@recommender-proc.do", MAIN_URL];
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
     
     NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [self getPhoneID], addText2.text];
+    NSString *params = [NSString stringWithFormat:@"my_id=%@&user_id=%@", [defaults stringForKey:PHONE_ID], addText2.text];
     [urlRequest setHTTPMethod:@"POST"];
     [urlRequest setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
     
@@ -266,9 +294,6 @@
         
         // 설정(푸시) Get
         }else if([fURL hasPrefix:@"js2ios://GetPush?"]){
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults synchronize];
-            
             NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
             NSString *returnStr = [returnArr1 objectAtIndex:1];
             
@@ -279,9 +304,6 @@
             
         // 설정(푸시) Set
         }else if([fURL hasPrefix:@"js2ios://SetPush?"]){
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults synchronize];
-            
             NSArray *onOffArr1 = [fURL componentsSeparatedByString:@"url="];
             NSString *onOffStr1 = [onOffArr1 objectAtIndex:1];
             NSArray *onOffArr2 = [onOffStr1 componentsSeparatedByString:@"&"];
@@ -322,8 +344,6 @@
         
         // 추천인 입력(설정)
         }else if([fURL hasPrefix:@"js2ios://InputAlert?"]){
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            [defaults synchronize];
             if([defaults stringForKey:ADD_PEOPLE_SETTING].length == 0){
                 alphaView.hidden = NO;
                 addView.hidden = NO;
@@ -737,6 +757,20 @@
     
     return uuid;
 }
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch *touch = [[event allTouches] anyObject];
+    if(alphaView == [touch view]){
+        [phoneText resignFirstResponder];
+        [addText resignFirstResponder];
+    }else if(firstView == [touch view]){
+        [phoneText resignFirstResponder];
+        [addText resignFirstResponder];
+    }
+    
+    [super touchesBegan:touches withEvent:event];
+}
+
 
 @end
 

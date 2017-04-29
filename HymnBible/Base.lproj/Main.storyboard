@@ -329,6 +329,7 @@
                         <outlet property="alphaView" destination="GXs-mc-z7R" id="E1K-VM-3JO"/>
                         <outlet property="animationImageView" destination="EKC-1M-eht" id="nxb-dA-K9S"/>
                         <outlet property="closeButton" destination="Kf6-C8-fgN" id="P6e-l7-eVv"/>
+                        <outlet property="firstSubmitButton" destination="C1m-Vl-kx5" id="h2t-Hc-WYq"/>
                         <outlet property="firstView" destination="IeA-cf-CFC" id="6J8-3G-2vy"/>
                         <outlet property="loadingAlphaView" destination="Acs-mg-g2a" id="Zxi-FE-8Ci"/>
                         <outlet property="phoneText" destination="kfy-wW-H0R" id="zHe-Gw-w7P"/>

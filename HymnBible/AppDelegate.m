@@ -90,18 +90,6 @@
     
     NSLog(@"device token : %@", devToken);
     [defaults setObject:devToken forKey:TOKEN_KEY];
-    
-    NSString *urlString = [NSString stringWithFormat:@"%@?reg_id=%@&type=ios", MAIN_URL, devToken];
-    NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
-    NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
-    
-    NSMutableURLRequest * urlRequest = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-    [urlRequest setHTTPMethod:@"GET"];
-    
-    NSURLSessionDataTask * dataTask =[defaultSession dataTaskWithRequest:urlRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSLog(@"Response:%@ %@\n", response, error);
-    }];
-    [dataTask resume];
 }
 
 // registerForRemoteNotificationTyles 결과 실패했을 때 호출됨
