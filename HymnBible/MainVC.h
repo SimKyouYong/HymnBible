@@ -33,6 +33,7 @@
     AVSpeechSynthesizer *synthesizer;
     
     NSUserDefaults *defaults;
+    BOOL first_push;
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;

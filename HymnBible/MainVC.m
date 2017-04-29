@@ -49,6 +49,8 @@
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
+    first_push = NO;
+    
     if([defaults stringForKey:PHONE_ID].length == 0){
         alphaView.hidden = NO;
         firstView.hidden = NO;
@@ -159,7 +161,7 @@
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [MainWebView loadRequest:request];
         
-        [self pushInit];
+        
     }];
     [dataTask resume];
 }
@@ -462,7 +464,10 @@
 // 웹뷰가 컨텐츠를 모두 읽은 후에 실행된다.
 - (void)webViewDidFinishLoad:(UIWebView *)webView{
     NSLog(@"finish");
-    
+    if (!first_push) {
+        first_push = YES;
+        [self pushInit];
+    }
     [self loadingClose];
 }
 
