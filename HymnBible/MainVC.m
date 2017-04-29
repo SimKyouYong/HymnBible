@@ -53,7 +53,7 @@
         alphaView.hidden = NO;
         firstView.hidden = NO;
     }else{
-        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [self getPhoneID]];
+        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [defaults stringForKey:PHONE_ID]];
         NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [MainWebView loadRequest:request];
