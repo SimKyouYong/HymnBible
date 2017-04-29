@@ -135,7 +135,6 @@
     [dataTask resume];
 }
 
-
 // 휴대폰 번호 & 추천인 통신(최초 한번만)
 - (void)firstInit{
     NSString *urlString = [NSString stringWithFormat:@"%@recommender-proc.do", MAIN_URL];
@@ -160,8 +159,6 @@
         NSURL *url = [NSURL URLWithString:urlString];
         NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
         [MainWebView loadRequest:request];
-        
-        
     }];
     [dataTask resume];
 }
@@ -219,7 +216,6 @@
     if ([[segue identifier] isEqualToString:@"map"])
     {
         //MapVC *vc = [segue destinationViewController];
-        
     }
 }
 

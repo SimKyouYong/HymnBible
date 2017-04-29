@@ -90,6 +90,7 @@
     NSLog(@"device token : %@", devToken);
     [defaults setObject:devToken forKey:TOKEN_KEY];
     
+    /*
     NSString *urlString = @"http://shqrp5200.cafe24.com/IOS_Insert.jsp";
     NSURLSessionConfiguration *defaultConfigObject = [NSURLSessionConfiguration defaultSessionConfiguration];
     NSURLSession *defaultSession = [NSURLSession sessionWithConfiguration: defaultConfigObject delegate: nil delegateQueue: [NSOperationQueue mainQueue]];
@@ -103,6 +104,7 @@
         NSLog(@"Response:%@ %@\n", response, error);
     }];
     [dataTask resume]; 
+     */
 }
 
 // registerForRemoteNotificationTyles 결과 실패했을 때 호출됨
