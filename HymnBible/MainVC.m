@@ -371,7 +371,7 @@
         
         // 공유하기
         }else if([fURL hasPrefix:@"js2ios://AppShare?"]){
-            NSString *title = @"안녕하세요. 성경찬송입니다. 다운받을 주소는 https://itunes.apple.com/us/app/facebook/id284882215?mt=8 입니다. 감사합니다.";
+            NSString *title = @"성경과찬송-뉴 - 무료'성경과찬송-뉴'\n본앱은 찬양 선교를 위해 중점을\n두고 만들어진 서비스입니다.\n찬송가 645전곡 반주제공, 무료문자\n성경과찬송-뉴, 교회찾기 기능등\n▶구글스토어 바로가기\nhttps://play.google.com/store/apps/details?id=co.kr.sky.hymnbible\n▶애플스토어 바로가기\nhttps://appsto.re/kr/ptiAjb.i\n※ 기능안내 ※\n▶찬송가 전곡 반주제공\n전문 연주자가 직접 연주 녹음\n예배의 품격을 높여줍니다.\n4부(소.엘.테.베) 멜로디지원\n▶무료 문자발송(단.장문)\n교회&단체,영업등 성도.고객관리로\n한번에 500명까지 발송가능\n▶성경 : 관주 특화기능\n▶교회찾기 서비스\n▶경조사 금전관리\n아이폰.안드로이드 앱스토어에서\n'성경과찬송뉴'를 검색";
             NSURL *url = [[NSURL alloc]initWithString:@""];
             NSArray *postItems = @[title, url];
             UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:postItems applicationActivities:nil];
