@@ -69,9 +69,6 @@
         }
     }
     
-    speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
-    [speechToTextModule setDelegate:self];
-    
     musicFlag = 0;
 }
 
@@ -232,6 +229,8 @@
         // SST
         if([fURL hasPrefix:@"js2ios://SearchSst?"]){
             alphaView.hidden = NO;
+            speechToTextModule = [[SpeechToTextModule alloc] initWithCustomDisplay:nil];
+            [speechToTextModule setDelegate:self];
             [self startRecording];
             
         // 성경(DB)
