@@ -34,6 +34,7 @@
     
     NSUserDefaults *defaults;
     BOOL first_push;
+    float tts_rate;
 }
 
 @property (weak, nonatomic) IBOutlet UIWebView *MainWebView;

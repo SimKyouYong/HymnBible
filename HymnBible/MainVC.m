@@ -49,19 +49,26 @@
     defaults = [NSUserDefaults standardUserDefaults];
     [defaults synchronize];
     
+    if ([defaults objectForKey:@"tts_rate"] == nil) {
+        tts_rate = 0.5;
+    }else{
+        NSString *obj = [NSString stringWithFormat:@"%@", [defaults objectForKey:@"tts_rate"]];
+        tts_rate = [obj floatValue];
+    }
+    NSLog(@"tts rate :: %f" , tts_rate);
+    
     first_push = NO;
     
-    if([defaults stringForKey:PHONE_ID].length == 0){
-        alphaView.hidden = NO;
-        firstView.hidden = NO;
-    }else{
-        NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [defaults stringForKey:PHONE_ID]];
-        NSURL *url = [NSURL URLWithString:urlString];
-        NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-        [MainWebView loadRequest:request];
-        
-        [self pushInit];
-    }
+    [defaults setObject:@"" forKey:PHONE_ID];
+
+    NSString *urlString = [NSString stringWithFormat:@"%@index.do?phone=%@", MAIN_URL, [defaults stringForKey:PHONE_ID]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [MainWebView loadRequest:request];
+    [self pushInit];
+
+
+    
     
     for (id subview in self.MainWebView.subviews) {
         if ([[subview class] isSubclassOfClass: [UIScrollView class]]) {
@@ -391,7 +398,7 @@
             
             AVSpeechUtterance *utterance = [AVSpeechUtterance speechUtteranceWithString:ttsValue];
             synthesizer = [[AVSpeechSynthesizer alloc] init];
-            utterance.rate = 0.3;
+            utterance.rate = tts_rate;
             utterance.pitchMultiplier = 1.0;
             [synthesizer speakUtterance:utterance];
             
@@ -413,6 +420,64 @@
             NSURL *url = [NSURL URLWithString:@"http://itunes.apple.com/app/id1231586511?mt=8"];
             [[UIApplication sharedApplication] openURL:url];
         }
+        //버전 가져오기
+        else if([fURL hasPrefix:@"js2ios://GetVersion?"]){
+            
+            //Version 체크
+            NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
+            NSString *appVersion = [infoDic objectForKey:@"CFBundleShortVersionString"];
+            NSLog(@"version : %@" ,appVersion);
+            
+            NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
+            NSString *returnStr = [returnArr1 objectAtIndex:1];
+            
+            NSString *scriptValue = [NSString stringWithFormat:@"javscript:%@('%@')", returnStr , appVersion];
+            
+            [MainWebView stringByEvaluatingJavaScriptFromString:scriptValue];
+        }
+        //메인 광고 클릭
+        else if([fURL hasPrefix:@"js2ios://Advertising?"]){
+            NSArray *onOffArr1 = [fURL componentsSeparatedByString:@"url="];
+            NSString *onOffStr1 = [onOffArr1 objectAtIndex:1];
+            NSArray *onOffArr2 = [onOffStr1 componentsSeparatedByString:@"&"];
+            NSString *onOffValue = [onOffArr2 objectAtIndex:0];
+            
+            
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:onOffValue]];
+
+        }
+        //TTS 속도 조절
+        //window.location.href = "js2ios://setSpeechRate?url=0.8&str=&return=리턴함수(true)";
+        //+ , - 0.2 씩 증감소 하면됨.
+        else if([fURL hasPrefix:@"js2ios://setSpeechRate?"]){
+            NSArray *onOffArr1 = [fURL componentsSeparatedByString:@"url="];
+            NSString *onOffStr1 = [onOffArr1 objectAtIndex:1];
+            NSArray *onOffArr2 = [onOffStr1 componentsSeparatedByString:@"&"];
+            NSString *onOffValue = [onOffArr2 objectAtIndex:0];
+            
+            
+            tts_rate = [onOffValue floatValue];
+            NSLog(@"tts_rate :: %f" , tts_rate);
+            [defaults setObject:onOffValue forKey:@"tts_rate"];
+        }
+        //TTS 속도 get
+        //window.location.href = "js2ios://getSpeechRate?url=안씀&str=&return=리턴함수(0.4)";
+        else if([fURL hasPrefix:@"js2ios://getSpeechRate?"]){
+            NSArray *onOffArr1 = [fURL componentsSeparatedByString:@"url="];
+            NSString *onOffStr1 = [onOffArr1 objectAtIndex:1];
+            NSArray *onOffArr2 = [onOffStr1 componentsSeparatedByString:@"&"];
+            NSString *onOffValue = [onOffArr2 objectAtIndex:0];
+            
+            
+            NSArray *returnArr1 = [fURL componentsSeparatedByString:@"return="];
+            NSString *returnStr = [returnArr1 objectAtIndex:1];
+            
+            NSString *rate = [NSString stringWithFormat:@"%@" , [defaults objectForKey:@"tts_rate"]];
+            NSString *scriptValue = [NSString stringWithFormat:@"javscript:%@('%@')", returnStr , rate];
+            NSLog(@"scriptValue :: %@" , scriptValue);
+            [MainWebView stringByEvaluatingJavaScriptFromString:scriptValue];
+        }
+
         
         return NO;
     }

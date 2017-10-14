@@ -6,10 +6,18 @@
 //  Copyright © 2017년 Joseph_iMac. All rights reserved.
 //
 
+
+//http://hoon86.cafe24.com/index.do
 // URL
-#define MAIN_URL            @"http://shqrp5200.cafe24.com/"
-#define DB_ADD_URL          @"http://shqrp5200.cafe24.com/json/updateRegid.do"
-#define SEARCH_URL          @"http://shqrp5200.cafe24.com/searchChurchJson.do"
+//#define MAIN_URL            @"http://shqrp5200.cafe24.com/"
+//#define DB_ADD_URL          @"http://shqrp5200.cafe24.com/json/updateRegid.do"
+//#define SEARCH_URL          @"http://shqrp5200.cafe24.com/searchChurchJson.do"
+
+
+#define MAIN_URL            @"http://hoon86.cafe24.com/"
+#define DB_ADD_URL          @"http://hoon86.cafe24.com/json/updateRegid.do"
+#define SEARCH_URL          @"http://hoon86.cafe24.com/searchChurchJson.do"
+
 
 // NSUserDefault
 #define TOKEN_KEY           @"token_key"
